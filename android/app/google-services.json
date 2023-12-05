@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "941288512720",
+    "project_id": "water-ordering-dd6fa",
+    "storage_bucket": "water-ordering-dd6fa.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:941288512720:android:5fb3a568acc42b05f452d5",
+        "android_client_info": {
+          "package_name": "com.example.water_ordering_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA8W18QDyqMZQ5No1UsZD6tR2WBi7dcz3k"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
