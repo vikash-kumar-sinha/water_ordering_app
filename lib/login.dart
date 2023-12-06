@@ -29,7 +29,7 @@ class _login_pageState extends State<login_page> {
           userCrediantial=await FirebaseAuth.instance.signInWithEmailAndPassword(email: email, password: password).then((value) {
             emailController.clear();
             passwordController.clear();
-            Navigator.push(context, MaterialPageRoute(builder: (context)=>dashboard()));
+            Navigator.push(context, MaterialPageRoute(builder: (context)=>dashboard(currentUserEmail: email)));
           });
         } on FirebaseAuthException catch(ex){
           return UiHelper.customAlertBox(context, ex.code.toString());

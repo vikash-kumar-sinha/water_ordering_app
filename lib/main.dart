@@ -36,11 +36,11 @@ class MyApp extends StatelessWidget {
       ),
       initialRoute: checkUser.id,
       routes: {
-        addAddress.id:(context)=>addAddress(),
+
         checkUser.id:(context)=>checkUser(),
         login_page.id:(context)=>login_page(),
         registration_page.id:(context)=>registration_page(),
-        dashboard.id:(context)=>dashboard(),
+
         OrderHistory.id:(context)=>OrderHistory()
       },
     );

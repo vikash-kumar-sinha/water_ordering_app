@@ -9,13 +9,15 @@ import 'package:flutter/material.dart';
 import 'package:water_ordering_app/history.dart';
 import 'package:water_ordering_app/login.dart';
 import 'orderList.dart';
-import 'package:razorpay_flutter/razorpay_flutter.dart';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'address.dart';
+import 'package:gap/gap.dart';
 
 class dashboard extends StatefulWidget {
   static const String id='dashboard';
-   dashboard({super.key});
+   dashboard({super.key,required this.currentUserEmail});
+   final String? currentUserEmail;
 
   @override
   State<dashboard> createState() => _dashboardState();
@@ -57,29 +59,27 @@ logOut()async{
   }
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(10.0),
-      child: SafeArea(
-        child: Scaffold(
-          backgroundColor: Colors.white,
+    return SafeArea(
 
-          appBar: AppBar(
-           shape: Border(bottom: BorderSide(width: 3,color: Colors.grey,)),
-            backgroundColor: Colors.grey[200],
-            actions: [IconButton(onPressed: (){logOut();}, icon: Icon(Icons.logout)),TextButton(onPressed: (){Navigator.push(context, MaterialPageRoute(builder: (context)=>OrderHistory()));},child: Icon(Icons.history,color: Colors.black87,))],
-            leading: Image.asset('images/logo.png',),
-            automaticallyImplyLeading: false,
-            title: Center(
-              child: Text('Hello,${userName}',style: TextStyle(
-                color: Colors.black87,
-                fontSize: 20,
-                fontWeight: FontWeight.bold
-              ),),
-            ),
+      child: Scaffold(
+        backgroundColor: Colors.white,
 
+        appBar: AppBar(
+         shape: Border(bottom: BorderSide(width: 3,color: Colors.grey,)),
+          backgroundColor: Colors.grey[200],
+          actions: [IconButton(onPressed: (){logOut();}, icon: Icon(Icons.logout)),TextButton(onPressed: (){Navigator.push(context, MaterialPageRoute(builder: (context)=>OrderHistory()));},child: Icon(Icons.history,color: Colors.black87,))],
+          leading: Image.asset('images/logo.png',),
+          automaticallyImplyLeading: false,
+          title: Center(
+            child: Text('Hello,${userName}',style: TextStyle(
+              color: Colors.black87,
+              fontSize: 16,
+              fontWeight: FontWeight.bold
+            ),),
           ),
-          body:NewOrder()
+
         ),
+        body:NewOrder(currentUserEmail: widget.currentUserEmail)
       ),
     );
   }
@@ -104,54 +104,33 @@ class RoundedIconButton extends StatelessWidget {
 }
 
 class NewOrder extends StatefulWidget {
-  const NewOrder({super.key});
+  const NewOrder({super.key,required this.currentUserEmail});
+  final String? currentUserEmail;
 
   @override
   State<NewOrder> createState() => _NewOrderState();
 }
 
 class _NewOrderState extends State<NewOrder> {
-  var _razorpay = Razorpay();
+  
   int smallBottleNumber=1;
 
   int largeBottleNumber=1;
-  String address="click here to add address-->";
 
-  @override
-  void initState() {
-    // TODO: implement initState
-    _razorpay.on(Razorpay.EVENT_PAYMENT_SUCCESS, _handlePaymentSuccess);
-    _razorpay.on(Razorpay.EVENT_PAYMENT_ERROR, _handlePaymentError);
-    _razorpay.on(Razorpay.EVENT_EXTERNAL_WALLET, _handleExternalWallet);
-    super.initState();
-  }
-  void _handlePaymentSuccess(PaymentSuccessResponse response) {
-    // Do something when payment succeeds
 
-  }
-
-  void _handlePaymentError(PaymentFailureResponse response) {
-    // Do something when payment fails
-    print('payment failed');
-  }
-
-  void _handleExternalWallet(ExternalWalletResponse response) {
-    // Do something when an external wallet is selected
-  }
+  
   @override
   Widget build(BuildContext context) {
     return  Padding(
       padding: const EdgeInsets.symmetric(horizontal: 8.0),
-      child: Column(
-
-        children: [
-
-          Expanded(child: Padding(
-            padding: const EdgeInsets.all(12.0),
-            child: Container(
-              decoration: BoxDecoration(borderRadius: BorderRadius.circular(15),color: Colors.blue),
-              margin: EdgeInsets.symmetric(horizontal: 100,),
-              height: 30,
+      child: Expanded(
+        child: Column(
+          children: [
+            Gap(10),
+            Expanded(flex: 1,child: Container(
+              decoration: BoxDecoration(borderRadius: BorderRadius.circular(25),color: Colors.grey[200]),
+              margin: EdgeInsets.symmetric(horizontal: 100,vertical: 3),
+              height: 15,
               width: 150,
               padding: EdgeInsets.symmetric(vertical: 7),
 
@@ -160,136 +139,98 @@ class _NewOrderState extends State<NewOrder> {
                 textAlign: TextAlign.center,
                 style: TextStyle(
                     color: Colors.black87,
-                    fontSize: 18,
+                    fontSize: 15,
                     fontWeight: FontWeight.bold
                 ),),
-            ),
-          ),),
-          SizedBox(height: 20,),
-          Expanded(
-            flex:8,child: Container(decoration: BoxDecoration(border: Border.all(
-              color: Colors.blue,
-              width: 3.0
-          ),borderRadius: BorderRadius.circular(20)),
-            child: Column(
-              children: [
-                Expanded(flex:6,child: Row(children: [Expanded(child: Image.asset('images/small_bottle.jpg')),
-                  Expanded(child: Row(
-                    mainAxisAlignment:MainAxisAlignment.center,
-                    children: [
-                      RoundedIconButton(icon: Icons.remove, onPressed: (){
-                        setState(() {
-                          smallBottleNumber--;
-                        });
-                      }),
-                      SizedBox(width: 5,),
-                      Text(smallBottleNumber.toString(),style: TextStyle(
-                          fontSize: 15,fontWeight: FontWeight.bold
-                      ),),
-                      SizedBox(width: 5,),
-                      RoundedIconButton(icon: Icons.add, onPressed: (){
-                        setState(() {
-                          smallBottleNumber++;
-                        });
-                      })
-                    ],))],)),
-                SizedBox(child: Divider(height: 3,thickness: 3.0,color: Colors.blue,),),
-                Expanded(flex:6,child: Row(children: [Expanded(child: Image.asset('images/large_bottle.jpg')),
-                  Expanded(child: Row(
-                    mainAxisAlignment:MainAxisAlignment.center,
-                    children: [
-                      RoundedIconButton(icon: Icons.remove, onPressed: (){
-                        setState(() {
-                          largeBottleNumber--;
-                        });
-                      }),
-                      SizedBox(width: 5,),
-                      Text(largeBottleNumber.toString(),style: TextStyle(
-                          fontSize: 15,fontWeight: FontWeight.bold
-                      ),),
-                      SizedBox(width: 5,),
-                      RoundedIconButton(icon: Icons.add, onPressed: (){
-                        setState(() {
-                          largeBottleNumber++;
-                        });
-                      })
-                    ],))],)),
-                SizedBox(child: Divider(height: 3,thickness: 3.0,color: Colors.blue,),),
-                Expanded(flex: 2,child: Row(
-                  children: [
-                    Expanded(child: Center(child: Text('Total',style: TextStyle(
-                        fontSize: 15,fontWeight: FontWeight.bold
-                    ),))),
-                    SizedBox(child: VerticalDivider(width:3,thickness: 3.0,color: Colors.blue,),),
-                    Expanded(child: Center(child: Text('\u{20B9}${smallBottleNumber*20+largeBottleNumber*30}',style: TextStyle(
-                        fontSize: 15,fontWeight: FontWeight.bold
-                    ),))),
-
-                  ],
-                )),
-                SizedBox(child: Divider(height: 3,thickness: 3.0,color: Colors.blue,),),
-                Expanded(flex:3,child: Row(
-
-                  children: [
-                    Expanded(child: Center(child: Text('Address',style: TextStyle(
-                        fontSize: 15,fontWeight: FontWeight.bold
-                    ),))),
-                    SizedBox(child: VerticalDivider(width:3,thickness: 3.0,color: Colors.blue,),),
-                    Expanded(child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: [
-
-                        Expanded(flex: 1,child: SizedBox(width: 5,)),
-                        Expanded(flex:3,child: Text('${address}',style: TextStyle(fontWeight: FontWeight.bold),)),
-                        Expanded(flex:3,child: IconButton(onPressed: (){
-                          Navigator.push(context, MaterialPageRoute(builder: (context)=>addAddress()));
-                        }, icon: Icon(Icons.add_location_alt,color: Colors.blue,),autofocus: true,))
-                      ],
-                    )),
-
-                  ],
-                )),
-
-              ],
             ),),
+            SizedBox(height: 20,),
+            Expanded(
+              flex:7,child: Container(decoration: BoxDecoration(border: Border.all(
+                color: Colors.blue,
+                width: 3.0
+            ),borderRadius: BorderRadius.circular(20)),
+              child: Column(
+                children: [
+                  Expanded(flex:6,child: Row(children: [Expanded(child: Image.asset('images/small_bottle.jpg')),
+                    Expanded(child: Row(
+                      mainAxisAlignment:MainAxisAlignment.center,
+                      children: [
+                        RoundedIconButton(icon: Icons.remove, onPressed: (){
+                          setState(() {
+                            smallBottleNumber--;
+                          });
+                        }),
+                        SizedBox(width: 5,),
+                        Text(smallBottleNumber.toString(),style: TextStyle(
+                            fontSize: 15,fontWeight: FontWeight.bold
+                        ),),
+                        SizedBox(width: 5,),
+                        RoundedIconButton(icon: Icons.add, onPressed: (){
+                          setState(() {
+                            smallBottleNumber++;
+                          });
+                        })
+                      ],))],)),
+                  SizedBox(child: Divider(height: 3,thickness: 3.0,color: Colors.blue,),),
+                  Expanded(flex:6,child: Row(children: [Expanded(child: Image.asset('images/large_bottle.jpg')),
+                    Expanded(child: Row(
+                      mainAxisAlignment:MainAxisAlignment.center,
+                      children: [
+                        RoundedIconButton(icon: Icons.remove, onPressed: (){
+                          setState(() {
+                            largeBottleNumber--;
+                          });
+                        }),
+                        SizedBox(width: 5,),
+                        Text(largeBottleNumber.toString(),style: TextStyle(
+                            fontSize: 15,fontWeight: FontWeight.bold
+                        ),),
+                        SizedBox(width: 5,),
+                        RoundedIconButton(icon: Icons.add, onPressed: (){
+                          setState(() {
+                            largeBottleNumber++;
+                          });
+                        })
+                      ],))],)),
+                  SizedBox(child: Divider(height: 3,thickness: 3.0,color: Colors.blue,),),
+                  Expanded(flex: 2,child: Row(
+                    children: [
+                      Expanded(child: Center(child: Text('Total',style: TextStyle(
+                          fontSize: 15,fontWeight: FontWeight.bold
+                      ),))),
+                      SizedBox(child: VerticalDivider(width:3,thickness: 3.0,color: Colors.blue,),),
+                      Expanded(child: Center(child: Text('\u{20B9}${smallBottleNumber*20+largeBottleNumber*30}',style: TextStyle(
+                          fontSize: 15,fontWeight: FontWeight.bold
+                      ),))),
+
+                    ],
+                  )),
+                  
+
+                ],
+              ),),
 
 
-          ),
-          Expanded(flex: 1,child: SizedBox(height: 10,)),
-          Expanded(flex: 2,child: Container(
-            margin: EdgeInsets.symmetric(vertical: 30),
-            child: TextButton(onPressed: (){
-              var options = {
-                'key': 'rzp_test_f3F0m3jMymJZIi',
-                'amount': (20*smallBottleNumber+30*largeBottleNumber)*100, //in the smallest currency sub-unit.
-                'name': 'Vikash Kumar Sinha',
-                'order_id': 'order_EMBFqjDHEEn80l', // Generate order_id using Orders API
-                'description': 'test',
-                'timeout': 300, // in seconds
-                'prefill': {
-                  'contact': '9123456789',
-                  'email': 'vikash.kumar@example.com'
-                }
-              };
-              _razorpay.open(options);
-              OrderHistoryDataType order=OrderHistoryDataType(large: 10, small: 5, date: DateTime(2022), time:DateTime(8), price: 400);
-              OrderHistoryList.add(order);}, child: Text('Proceed for Payment',style: TextStyle(color: Colors.black87,
-                fontWeight: FontWeight.bold,fontSize: 16),),style: ButtonStyle(
+            ),
+            //Expanded(flex: 1,child: SizedBox(height: 10,)),
+            Expanded(flex: 2,child: Container(
+              margin: EdgeInsets.symmetric(vertical: 30),
+              child: TextButton(onPressed: (){                
+                Navigator.push(context, MaterialPageRoute(builder: (context)=>addAddress(
+                    smallBottleNumber: smallBottleNumber, largeBottleNumber: largeBottleNumber,currentUserEmail: widget.currentUserEmail,)));
+                }, child: Text('Proceed for address',style: TextStyle(color: Colors.black87,
+                  fontWeight: FontWeight.bold,fontSize: 15),),style: ButtonStyle(
 
-                backgroundColor: MaterialStateProperty.all(Colors.blue)),),
-          ))
+                  backgroundColor: MaterialStateProperty.all(Colors.blue)),),
+            ))
 
-        ],
+          ],
+        ),
       ),
     );
 
   }
-  @override
-  void dispose() {
-    // TODO: implement dispose
-    _razorpay.clear();
-    super.dispose();
-  }
+ 
 }
 
 
