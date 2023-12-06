@@ -86,15 +86,15 @@ class _registration_pageState extends State<registration_page> {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Expanded(flex:2,child: SizedBox()),
+              //Expanded(flex:2,child: SizedBox()),
               Expanded(flex: 5,
                 child: Text('Create a new account',style: TextStyle(
                   fontWeight: FontWeight.bold,
-                  fontSize: 28,
+                  fontSize: 22,
                 ),),
               ),
               //SizedBox(height: 10,),
-              Expanded(flex: 5,
+              Expanded(flex: 4,
                 child: Container(
                   margin: EdgeInsets.symmetric(horizontal: 20),
                   child: TextField(
@@ -109,7 +109,7 @@ class _registration_pageState extends State<registration_page> {
                         hintStyle: TextStyle(
                             color: Colors.grey,
                             fontWeight: FontWeight.bold,
-                            fontSize: 18
+                            fontSize: 15
                         ),
                         prefixIcon: Icon(Icons.person,color: Colors.blue,),
                         focusedBorder: OutlineInputBorder(
@@ -132,7 +132,7 @@ class _registration_pageState extends State<registration_page> {
                 ),
               ),
               //SizedBox(height: 10,),
-              Expanded(flex: 5,
+              Expanded(flex: 4,
                 child: Container(
                   margin: EdgeInsets.symmetric(horizontal: 20),
                   child: TextField(
@@ -147,7 +147,7 @@ class _registration_pageState extends State<registration_page> {
                         hintStyle: TextStyle(
                             color: Colors.grey,
                             fontWeight: FontWeight.bold,
-                            fontSize: 18
+                            fontSize: 15
                         ),
                         prefixIcon: Icon(Icons.email,color: Colors.blue,),
                         focusedBorder: OutlineInputBorder(
@@ -170,7 +170,7 @@ class _registration_pageState extends State<registration_page> {
                 ),
               ),
               //SizedBox(height: 10,),
-              Expanded(flex: 5,
+              Expanded(flex: 4,
                 child: Container(
                   margin: EdgeInsets.symmetric(horizontal: 20),
                   child: TextField(
@@ -185,7 +185,7 @@ class _registration_pageState extends State<registration_page> {
                         hintStyle: TextStyle(
                             color: Colors.grey,
                             fontWeight: FontWeight.bold,
-                            fontSize: 18
+                            fontSize: 15
                         ),
                         prefixIcon: Icon(Icons.phone,color: Colors.blue,),
                         focusedBorder: OutlineInputBorder(
@@ -208,7 +208,7 @@ class _registration_pageState extends State<registration_page> {
                 ),
               ),
               //SizedBox(height: 10,),
-              Expanded(flex: 5,
+              Expanded(flex: 4,
                 child: Container(
                   margin: EdgeInsets.symmetric(horizontal: 20),
                   child: TextField(
@@ -224,7 +224,7 @@ class _registration_pageState extends State<registration_page> {
                         hintStyle: TextStyle(
                             color: Colors.grey,
                             fontWeight: FontWeight.bold,
-                            fontSize: 18
+                            fontSize: 15
                         ),
                         prefixIcon: Icon(Icons.lock,color: Colors.blue,),
                         focusedBorder: OutlineInputBorder(
@@ -247,7 +247,7 @@ class _registration_pageState extends State<registration_page> {
                 ),
               ),
               //SizedBox(height: 10,),
-              Expanded(flex: 5,
+              Expanded(flex: 4,
                 child: Container(
                   margin: EdgeInsets.symmetric(horizontal: 20),
                   child: TextField(
@@ -269,7 +269,7 @@ class _registration_pageState extends State<registration_page> {
                         hintStyle: TextStyle(
                             color: Colors.grey,
                             fontWeight: FontWeight.bold,
-                            fontSize: 18
+                            fontSize: 15
                         ),
                         prefixIcon: Icon(Icons.lock,color: Colors.blue,),
                         focusedBorder: OutlineInputBorder(
@@ -302,7 +302,7 @@ class _registration_pageState extends State<registration_page> {
                       confirmPassworrdController.text.toString());}, child: Text('Create account',
                     style: TextStyle(
                         color: Colors.black87,
-                        fontSize: 18,
+                        fontSize: 15,
                         fontWeight: FontWeight.bold
                     ),),
                       style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Colors.blue),
@@ -311,7 +311,7 @@ class _registration_pageState extends State<registration_page> {
                 ),
               ),
 
-              Expanded(flex: 5,
+              Expanded(flex: 4,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [

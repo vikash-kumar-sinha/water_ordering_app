@@ -17,7 +17,7 @@ List<OrderHistoryDataType> OrderHistoryList=[
 class UiHelper{
   static customAlertBox(BuildContext context,String text){
     return showDialog(context: context, builder: (BuildContext context){
-      return AlertDialog(title:Text(text),actions: [
+      return AlertDialog(title:Text(text,textScaleFactor: 1,),actions: [
         TextButton(onPressed: (){
           Navigator.pop(context);
         }, child: Text('Ok'))

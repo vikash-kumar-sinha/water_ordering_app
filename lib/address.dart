@@ -19,10 +19,10 @@ class _addAddressState extends State<addAddress> {
 
    @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        appBar: AppBar(title: Text('Add Address'),centerTitle: true,),
-        body: Expanded(child: Column(
+    return Scaffold(
+      appBar: AppBar(title: Text('Add Address'),centerTitle: true,),
+      body: SafeArea(
+        child: Expanded(child: Column(
           children: [
             Expanded(child: TextField(
               controller: roomNoController,
@@ -154,8 +154,8 @@ class _addAddressState extends State<addAddress> {
             ))
           ],
         ),),
-
       ),
+
     );
   }
 }
