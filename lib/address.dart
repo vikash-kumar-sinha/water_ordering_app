@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:razorpay_flutter/razorpay_flutter.dart';
 import 'orderList.dart';
 import 'package:gap/gap.dart';
+import 'package:intl/intl.dart';
 
 class addAddress extends StatefulWidget {
    addAddress({super.key,required this.smallBottleNumber,required this.largeBottleNumber,required this.currentUserEmail});
@@ -43,7 +44,8 @@ class _addAddressState extends State<addAddress> {
 
   void _handlePaymentError(PaymentFailureResponse response) {
     // Do something when payment fails
-    print('payment failed');
+    storeAddress();
+    pushOrderInHistory();
   }
 
   void _handleExternalWallet(ExternalWalletResponse response) {
@@ -69,6 +71,63 @@ class _addAddressState extends State<addAddress> {
 
   }
 
+  String generateOrderId(){
+    final now=DateTime.now();
+
+    return now.microsecondsSinceEpoch.toString();
+  }
+
+  checkCityPincode(){
+    if(cityController.text.toString().toUpperCase() =="" && pincodeController.text.toString().toUpperCase()=="")
+      {
+
+        UiHelper.customAlertBox(context,"Please enter city and pincode");
+      }
+    else if(cityController.text.toString().toUpperCase() !="RANCHI")
+      {
+        UiHelper.customAlertBox(context, "This water ordering is currently working in ranchi only");
+
+      }
+    else if(pincodeController.text.toString().toUpperCase()!="834001")
+      {
+        UiHelper.customAlertBox(context, "Please provide  correct pincode of ranchi");
+      }
+    else
+      {
+
+        var options = {
+          'key': 'rzp_test_f3F0m3jMymJZIi',
+          'amount': (20 * widget.smallBottleNumber +
+              30 * widget.largeBottleNumber) * 100,
+          //in the smallest currency sub-unit.
+          'name': 'Vikash Kumar Sinha',
+          'order_id': 'order_EMBFqjDHEEn80l',
+          // Generate order_id using Orders API
+          'description': 'test',
+          'timeout': 300,
+          // in seconds
+          'prefill': {
+            'contact': '7041477840',
+            'email': 'vikash.kumar@example.com'
+          }
+        };
+        _razorpay.open(options);
+      }
+  }
+
+  pushOrderInHistory()async{
+    final orderId=generateOrderId();
+    final userRef=user.collection("Users").doc(widget.currentUserEmail).collection("Order History");
+    await userRef.doc(orderId).set({
+      'small bottle':widget.smallBottleNumber.toString(),
+      'Large bottle':widget.largeBottleNumber.toString(),
+      'Price':(20*widget.smallBottleNumber+30*widget.largeBottleNumber).toString(),
+      'Date':DateFormat.yMd().format(DateTime.now()).toString(),
+      'Time':DateFormat().add_jm().format(DateTime.now()).toString(),
+    }).then((value) {
+      UiHelper.customAlertBox(context, "Order Placed successfully");
+    });
+  }
    @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -247,24 +306,8 @@ class _addAddressState extends State<addAddress> {
               Expanded(flex: 5,child: Container(
                 margin: EdgeInsets.symmetric(vertical: 30),
                 child: TextButton(onPressed: () {
-                  var options = {
-                    'key': 'rzp_test_f3F0m3jMymJZIi',
-                    'amount': (20 * widget.smallBottleNumber +
-                        30 * widget.largeBottleNumber) * 100,
-                    //in the smallest currency sub-unit.
-                    'name': 'Vikash Kumar Sinha',
-                    'order_id': 'order_EMBFqjDHEEn80l',
-                    // Generate order_id using Orders API
-                    'description': 'test',
-                    'timeout': 300,
-                    // in seconds
-                    'prefill': {
-                      'contact': '9123456789',
-                      'email': 'vikash.kumar@example.com'
-                    }
-                  };
-                  _razorpay.open(options);
-                  storeAddress();
+
+                  checkCityPincode();
 
                   //OrderHistoryDataType order=OrderHistoryDataType(large: 10, small: 5, date: DateTime(2022), time:DateTime(8), price: 400);
                   //OrderHistoryList.add(order);},
