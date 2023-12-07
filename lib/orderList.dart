@@ -7,12 +7,19 @@ class OrderHistoryDataType {
   late int price;
 
   OrderHistoryDataType({required this.large,required this.small,required this.date,required this.time,required this.price,});
+
+  factory OrderHistoryDataType.fromJson(Map<String, dynamic> json)=> OrderHistoryDataType(
+      large: json['Large bottle'],
+      small: json['small bottle'],
+      date: json['Date'],
+      time: json['Time'],
+      price: json['Price']);
 }
 
-List<OrderHistoryDataType> OrderHistoryList=[
-  OrderHistoryDataType(large: 5, small: 2, date: DateTime(2023), time: DateTime(8), price: 190),
-  OrderHistoryDataType(large: 5, small: 2, date: DateTime(2023), time: DateTime(8), price: 190),
-];
+// List<OrderHistoryDataType> OrderHistoryList=[
+//   OrderHistoryDataType(large: 5, small: 2, date: DateTime(2023), time: DateTime(8), price: 190),
+//   OrderHistoryDataType(large: 5, small: 2, date: DateTime(2023), time: DateTime(8), price: 190),
+// ];
 
 class UiHelper{
   static customAlertBox(BuildContext context,String text){
