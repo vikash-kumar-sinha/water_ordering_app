@@ -73,8 +73,8 @@ class _addAddressState extends State<addAddress> {
 
   String generateOrderId(){
     final now=DateTime.now();
-
-    return now.microsecondsSinceEpoch.toString();
+    final id="${now.year}${now.month}${now.day}${now.hour}${now.minute}${now.microsecondsSinceEpoch}";
+    return id;
   }
 
   checkCityPincode(){
@@ -124,6 +124,7 @@ class _addAddressState extends State<addAddress> {
       'Price':(20*widget.smallBottleNumber+30*widget.largeBottleNumber).toString(),
       'Date':DateFormat.yMd().format(DateTime.now()).toString(),
       'Time':DateFormat().add_jm().format(DateTime.now()).toString(),
+      'Timestamp':orderId.toString()
     }).then((value) {
       UiHelper.customAlertBox(context, "Order Placed successfully");
     });

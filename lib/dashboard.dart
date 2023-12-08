@@ -39,7 +39,7 @@ class _dashboardState extends State<dashboard> {
             String uName=snapshot.data()?['name'];
             String trimname=uName.trim();
             List<String> words=trimname.split(" ");
-            userName=words[0];
+            userName=words[0]+" "+words[1];
           });
 
 
@@ -66,14 +66,14 @@ logOut()async{
 
         appBar: AppBar(
          shape: Border(bottom: BorderSide(width: 3,color: Colors.grey,)),
-          backgroundColor: Colors.grey[200],
-          actions: [IconButton(onPressed: (){logOut();}, icon: Icon(Icons.logout)),TextButton(onPressed: (){Navigator.push(context, MaterialPageRoute(builder: (context)=>OrderHistory()));},child: Icon(Icons.history,color: Colors.black87,))],
+          backgroundColor: Colors.blue,
+          actions: [IconButton(onPressed: (){logOut();}, icon: Icon(Icons.logout,color: Colors.black87,)),TextButton(onPressed: (){Navigator.push(context, MaterialPageRoute(builder: (context)=>OrderHistory()));},child: Icon(Icons.history,color: Colors.black87,))],
           leading: Image.asset('images/logo.png',),
           automaticallyImplyLeading: false,
           title: Center(
             child: Text('Hello,${userName}',style: TextStyle(
               color: Colors.black87,
-              fontSize: 16,
+              fontSize: 13,
               fontWeight: FontWeight.bold
             ),),
           ),
@@ -128,7 +128,7 @@ class _NewOrderState extends State<NewOrder> {
           children: [
             Gap(10),
             Expanded(flex: 1,child: Container(
-              decoration: BoxDecoration(borderRadius: BorderRadius.circular(25),color: Colors.grey[200]),
+              decoration: BoxDecoration(borderRadius: BorderRadius.circular(25),color: Colors.blue[200]),
               margin: EdgeInsets.symmetric(horizontal: 100,vertical: 3),
               height: 15,
               width: 150,

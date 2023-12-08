@@ -32,3 +32,8 @@ class UiHelper{
     });
   }
 }
+
+const TextStyle orderTextstyle=TextStyle(
+  fontSize: 10,
+  fontWeight: FontWeight.bold
+);
