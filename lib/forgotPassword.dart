@@ -14,9 +14,9 @@ class _ForgotPasswordState extends State<ForgotPassword> {
   TextEditingController emailController=TextEditingController();
   bool _isLoading=true;
   forgotPassword(String email)async{
-    if(email=="")
+    if(email=="") {
       return UiHelper.customAlertBox(context, "Please enter email to Reset Password");
-    else
+    } else
       {
          FirebaseAuth.instance.sendPasswordResetEmail(email: email);
       }
@@ -26,7 +26,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    Future.delayed(Duration(seconds: 1),(){
+    Future.delayed(const Duration(seconds: 1),(){
       setState(() {
         _isLoading=false;
       });
@@ -35,14 +35,14 @@ class _ForgotPasswordState extends State<ForgotPassword> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      child: _isLoading?Scaffold(
+      child: _isLoading?const Scaffold(
         body: Center(
           child: SpinKitWaveSpinner(color: Colors.blue,size: 150,waveColor: Colors.blue,),
         ),
       ):Scaffold(
         appBar: AppBar(
-          shape: Border(bottom: BorderSide(width: 3,color: Colors.grey,)),
-          title: Text('Forgot Password',style: TextStyle(
+          shape: const Border(bottom: BorderSide(width: 3,color: Colors.grey,)),
+          title: const Text('Forgot Password',style: TextStyle(
               color: Colors.black87,
               fontSize: 20,
               fontWeight: FontWeight.bold
@@ -58,22 +58,22 @@ class _ForgotPasswordState extends State<ForgotPassword> {
               children: [
               TextField(
                 controller: emailController,
-                style: TextStyle(
+                style: const TextStyle(
                     color: Colors.black87,
                     fontWeight: FontWeight.bold
                 ),
                 keyboardType: TextInputType.emailAddress,
                 decoration: InputDecoration(
                     hintText: 'E-mail',
-                    hintStyle: TextStyle(
+                    hintStyle: const TextStyle(
                         color: Colors.grey,
                         fontWeight: FontWeight.bold,
                         fontSize: 18
                     ),
-                    prefixIcon: Icon(Icons.email,color: Colors.blue,),
+                    prefixIcon: const Icon(Icons.email,color: Colors.blue,),
                     focusedBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10),
-                      borderSide: BorderSide(
+                      borderSide: const BorderSide(
                           color: Colors.grey,
                           width: 3.0
                       ),
@@ -82,22 +82,22 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                     ),
                     enabledBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10),
-                        borderSide: BorderSide(
+                        borderSide: const BorderSide(
                             color: Colors.black
                         )
                     )
                 ),
               ),
-              SizedBox(height: 20,),
-              TextButton(onPressed: (){forgotPassword(emailController.text.toString());}, child: Text('Reset Password',
+              const SizedBox(height: 20,),
+              TextButton(onPressed: (){forgotPassword(emailController.text.toString());},
+                  style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Colors.blue),
+
+                  ), child: const Text('Reset Password',
                 style: TextStyle(
                     color: Colors.black87,
                     fontSize: 18,
                     fontWeight: FontWeight.bold
-                ),),
-                  style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Colors.blue),
-
-                  )),
+                ),)),
             ],),
           ),
         ),

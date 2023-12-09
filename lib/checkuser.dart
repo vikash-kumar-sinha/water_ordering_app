@@ -21,11 +21,12 @@ class _checkUserState extends State<checkUser> {
   checkUser1(){
     final user=FirebaseAuth.instance.currentUser;
     if(user!=null){
-      final FirebaseAuth _auth=FirebaseAuth.instance;
-      final User? user=_auth.currentUser;
+      final FirebaseAuth auth=FirebaseAuth.instance;
+      final User? user=auth.currentUser;
       final String? currentUserEmail=user?.email;
       return dashboard(currentUserEmail: currentUserEmail,);
-    }else
-      return login_page();
+    }else {
+      return const login_page();
+    }
   }
 }

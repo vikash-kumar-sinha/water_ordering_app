@@ -8,7 +8,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:water_ordering_app/history.dart';
 import 'package:water_ordering_app/login.dart';
-import 'orderList.dart';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'address.dart';
@@ -17,7 +16,7 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 class dashboard extends StatefulWidget {
   static const String id='dashboard';
-   dashboard({super.key,required this.currentUserEmail});
+   const dashboard({super.key,required this.currentUserEmail});
    final String? currentUserEmail;
 
   @override
@@ -39,9 +38,9 @@ class _dashboardState extends State<dashboard> {
 
   getUser()async{
     final FirebaseAuth auth=  FirebaseAuth.instance;
-    final User? user=await auth.currentUser;
+    final User? user=auth.currentUser;
     final String? currentUserId=user?.email.toString();
-    log("id:${currentUserId}");
+    log("id:$currentUserId");
     await FirebaseFirestore.instance.collection("Users").doc(currentUserId).get().then((snapshot){
       if(snapshot.exists)
         {
@@ -49,7 +48,7 @@ class _dashboardState extends State<dashboard> {
             String uName=snapshot.data()?['name'];
             String trimname=uName.trim();
             List<String> words=trimname.split(" ");
-            userName=words[0]+" "+words[1];
+            userName="${words[0]} ${words[1]}";
           });
 
 
@@ -58,14 +57,14 @@ class _dashboardState extends State<dashboard> {
   }
 logOut()async{
   await FirebaseAuth.instance.signOut().then((value) {
-    Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => login_page()));
+    Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const login_page()));
   });
 }
 @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    Future.delayed(Duration(seconds: 3),(){
+    Future.delayed(const Duration(seconds: 3),(){
       setState(() {
         _isLoading=false;
       });
@@ -77,7 +76,7 @@ logOut()async{
   Widget build(BuildContext context) {
     return SafeArea(
 
-      child: _isLoading?Scaffold(
+      child: _isLoading?const Scaffold(
         body: Center(
           child: SpinKitWaveSpinner(color: Colors.blue,size: 150,waveColor: Colors.blue,),
         ),
@@ -85,13 +84,13 @@ logOut()async{
         backgroundColor: Colors.white,
 
         appBar: AppBar(
-         shape: Border(bottom: BorderSide(width: 3,color: Colors.grey,)),
+         shape: const Border(bottom: BorderSide(width: 3,color: Colors.grey,)),
           backgroundColor: Colors.blue,
-          actions: [IconButton(onPressed: (){logOut();}, icon: Icon(Icons.logout,color: Colors.black87,)),TextButton(onPressed: (){Navigator.push(context, MaterialPageRoute(builder: (context)=>OrderHistory()));},child: Icon(Icons.history,color: Colors.black87,))],
+          actions: [IconButton(onPressed: (){logOut();}, icon: const Icon(Icons.logout,color: Colors.black87,)),TextButton(onPressed: (){Navigator.push(context, MaterialPageRoute(builder: (context)=>const OrderHistory()));},child: const Icon(Icons.history,color: Colors.black87,))],
           leading: Image.asset('images/logo.png',),
           automaticallyImplyLeading: false,
           title: Center(
-            child: Text('Hello,${userName}',style: TextStyle(
+            child: Text('Hello,$userName',style: const TextStyle(
               color: Colors.black87,
               fontSize: 13,
               fontWeight: FontWeight.bold
@@ -106,7 +105,7 @@ logOut()async{
 }
 
 class RoundedIconButton extends StatelessWidget {
-   RoundedIconButton({ required this.icon,required this.onPressed});
+   const RoundedIconButton({super.key,  required this.icon,required this.onPressed});
 
   final IconData icon;
    final VoidCallback onPressed;
@@ -115,11 +114,11 @@ class RoundedIconButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return RawMaterialButton(
       onPressed: onPressed,
-      child: Icon(icon),
     elevation: 6.0,
-    constraints: BoxConstraints.tightFor(width: 40.0,height: 40.0),
-    shape: CircleBorder(),
-    fillColor: Colors.lightBlue,);
+    constraints: const BoxConstraints.tightFor(width: 40.0,height: 40.0),
+    shape: const CircleBorder(),
+    fillColor: Colors.lightBlue,
+      child: Icon(icon),);
   }
 }
 
@@ -148,15 +147,15 @@ class _NewOrderState extends State<NewOrder> {
       child: Expanded(
         child: Column(
           children: [
-            Gap(10),
+            const Gap(10),
             Expanded(flex: 1,child: Container(
               decoration: BoxDecoration(borderRadius: BorderRadius.circular(25),color: Colors.blue[200]),
-              margin: EdgeInsets.symmetric(horizontal: 100,vertical: 3),
+              margin: const EdgeInsets.symmetric(horizontal: 100,vertical: 3),
               height: 15,
               width: 150,
-              padding: EdgeInsets.symmetric(vertical: 7),
+              padding: const EdgeInsets.symmetric(vertical: 7),
 
-              child: Text('New order',
+              child: const Text('New order',
 
                 textAlign: TextAlign.center,
                 style: TextStyle(
@@ -165,7 +164,7 @@ class _NewOrderState extends State<NewOrder> {
                     fontWeight: FontWeight.bold
                 ),),
             ),),
-            SizedBox(height: 20,),
+            const SizedBox(height: 20,),
             Expanded(
               flex:7,child: Container(decoration: BoxDecoration(border: Border.all(
                 color: Colors.blue,
@@ -182,18 +181,18 @@ class _NewOrderState extends State<NewOrder> {
                             smallBottleNumber--;
                           });
                         }),
-                        SizedBox(width: 5,),
-                        Text(smallBottleNumber.toString(),style: TextStyle(
+                        const SizedBox(width: 5,),
+                        Text(smallBottleNumber.toString(),style: const TextStyle(
                             fontSize: 15,fontWeight: FontWeight.bold
                         ),),
-                        SizedBox(width: 5,),
+                        const SizedBox(width: 5,),
                         RoundedIconButton(icon: Icons.add, onPressed: (){
                           setState(() {
                             smallBottleNumber++;
                           });
                         })
                       ],))],)),
-                  SizedBox(child: Divider(height: 3,thickness: 3.0,color: Colors.blue,),),
+                  const SizedBox(child: Divider(height: 3,thickness: 3.0,color: Colors.blue,),),
                   Expanded(flex:6,child: Row(children: [Expanded(child: widget.largeImage),
                     Expanded(child: Row(
                       mainAxisAlignment:MainAxisAlignment.center,
@@ -203,25 +202,25 @@ class _NewOrderState extends State<NewOrder> {
                             largeBottleNumber--;
                           });
                         }),
-                        SizedBox(width: 5,),
-                        Text(largeBottleNumber.toString(),style: TextStyle(
+                        const SizedBox(width: 5,),
+                        Text(largeBottleNumber.toString(),style: const TextStyle(
                             fontSize: 15,fontWeight: FontWeight.bold
                         ),),
-                        SizedBox(width: 5,),
+                        const SizedBox(width: 5,),
                         RoundedIconButton(icon: Icons.add, onPressed: (){
                           setState(() {
                             largeBottleNumber++;
                           });
                         })
                       ],))],)),
-                  SizedBox(child: Divider(height: 3,thickness: 3.0,color: Colors.blue,),),
+                  const SizedBox(child: Divider(height: 3,thickness: 3.0,color: Colors.blue,),),
                   Expanded(flex: 2,child: Row(
                     children: [
-                      Expanded(child: Center(child: Text('Total',style: TextStyle(
+                      const Expanded(child: Center(child: Text('Total',style: TextStyle(
                           fontSize: 15,fontWeight: FontWeight.bold
                       ),))),
-                      SizedBox(child: VerticalDivider(width:3,thickness: 3.0,color: Colors.blue,),),
-                      Expanded(child: Center(child: Text('\u{20B9}${smallBottleNumber*20+largeBottleNumber*30}',style: TextStyle(
+                      const SizedBox(child: VerticalDivider(width:3,thickness: 3.0,color: Colors.blue,),),
+                      Expanded(child: Center(child: Text('\u{20B9}${smallBottleNumber*20+largeBottleNumber*30}',style: const TextStyle(
                           fontSize: 15,fontWeight: FontWeight.bold
                       ),))),
 
@@ -236,14 +235,14 @@ class _NewOrderState extends State<NewOrder> {
             ),
             //Expanded(flex: 1,child: SizedBox(height: 10,)),
             Expanded(flex: 2,child: Container(
-              margin: EdgeInsets.symmetric(vertical: 30),
+              margin: const EdgeInsets.symmetric(vertical: 30),
               child: TextButton(onPressed: (){                
                 Navigator.push(context, MaterialPageRoute(builder: (context)=>addAddress(
                     smallBottleNumber: smallBottleNumber, largeBottleNumber: largeBottleNumber,currentUserEmail: widget.currentUserEmail,)));
-                }, child: Text('Proceed for address',style: TextStyle(color: Colors.black87,
-                  fontWeight: FontWeight.bold,fontSize: 15),),style: ButtonStyle(
+                },style: ButtonStyle(
 
-                  backgroundColor: MaterialStateProperty.all(Colors.blue)),),
+                  backgroundColor: MaterialStateProperty.all(Colors.blue)), child: const Text('Proceed for address',style: TextStyle(color: Colors.black87,
+                  fontWeight: FontWeight.bold,fontSize: 15),),),
             ))
 
           ],

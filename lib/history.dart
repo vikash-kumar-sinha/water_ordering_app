@@ -1,11 +1,9 @@
-import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'orderList.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 class OrderHistory extends StatefulWidget {
@@ -24,8 +22,8 @@ class _OrderHistoryState extends State<OrderHistory> {
   List<dynamic> ordersList=[];
   Future<String?> getUserEmail()async{
     final FirebaseAuth user=FirebaseAuth.instance;
-    final User?  userId=await user.currentUser;
-    final String? userName=await userId?.email.toString();
+    final User?  userId=user.currentUser;
+    final String? userName=userId?.email.toString();
     return userName;
   }
 
@@ -64,7 +62,7 @@ class _OrderHistoryState extends State<OrderHistory> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    Future.delayed(Duration(seconds: 2),(){
+    Future.delayed(const Duration(seconds: 2),(){
       setState(() {
         _isLoading=false;
       });
@@ -75,13 +73,13 @@ class _OrderHistoryState extends State<OrderHistory> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      child: _isLoading?Scaffold(
+      child: _isLoading?const Scaffold(
         body: Center(
           child: SpinKitWaveSpinner(color: Colors.blue,size: 150,waveColor: Colors.blue,),
         ),
       ):Scaffold(
         appBar: AppBar(foregroundColor: Colors.black87,
-          title: Text('Your Orders',style: TextStyle(
+          title: const Text('Your Orders',style: TextStyle(
               color: Colors.black87,
               fontSize: 16,
               fontWeight: FontWeight.bold
@@ -91,7 +89,7 @@ class _OrderHistoryState extends State<OrderHistory> {
         ),
         body: Column(
           children: [
-            Flexible(
+            const Flexible(
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
@@ -112,7 +110,7 @@ class _OrderHistoryState extends State<OrderHistory> {
               return Card(
                 child: Column(
                   children: [
-                    SizedBox(height: 5,),
+                    const SizedBox(height: 5,),
                     Row(
                            mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
@@ -123,13 +121,13 @@ class _OrderHistoryState extends State<OrderHistory> {
                             Text('large bottles  : ${order["Large bottle"]}',style: orderTextstyle,)
                           ],
                         ),
-                        SizedBox(width: 5,),
+                        const SizedBox(width: 5,),
                         Row(children: [
                           Text('${order["Date"]}',style: orderTextstyle,),
-                          SizedBox(width: 5,),
+                          const SizedBox(width: 5,),
                           Text('${order["Time"]}',style: orderTextstyle,)
                         ],),
-                        SizedBox(width: 5,),
+                        const SizedBox(width: 5,),
                         Text('\u{20B9} ${order["Price"]}',style: orderTextstyle,)
                       ],)
                   ],

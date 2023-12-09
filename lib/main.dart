@@ -1,18 +1,11 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:water_ordering_app/address.dart';
 import 'package:water_ordering_app/checkuser.dart';
-import 'package:water_ordering_app/dashboard.dart';
 import 'package:water_ordering_app/history.dart';
 import 'package:water_ordering_app/login.dart';
-import 'address.dart';
-import 'login.dart';
 import 'registration.dart';
-import 'history.dart';
 
-import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
-import 'checkuser.dart';
 
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();
@@ -37,11 +30,11 @@ class MyApp extends StatelessWidget {
       initialRoute: checkUser.id,
       routes: {
 
-        checkUser.id:(context)=>checkUser(),
-        login_page.id:(context)=>login_page(),
-        registration_page.id:(context)=>registration_page(),
+        checkUser.id:(context)=>const checkUser(),
+        login_page.id:(context)=>const login_page(),
+        registration_page.id:(context)=>const registration_page(),
 
-        OrderHistory.id:(context)=>OrderHistory()
+        OrderHistory.id:(context)=>const OrderHistory()
       },
     );
   }

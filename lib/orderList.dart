@@ -27,7 +27,7 @@ class UiHelper{
       return AlertDialog(title:Text(text,textScaleFactor: 1,),actions: [
         TextButton(onPressed: (){
           Navigator.pop(context);
-        }, child: Text('Ok'))
+        }, child: const Text('Ok'))
       ],);
     });
   }

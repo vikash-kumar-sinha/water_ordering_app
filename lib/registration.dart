@@ -1,4 +1,3 @@
-import 'dart:developer';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -28,9 +27,9 @@ class _registration_pageState extends State<registration_page> {
   bool _isLoading=true;
 
   registerFunction(String name,String email,String phone,String password,String confirmPassword)async{
-    if(name=="")
+    if(name=="") {
       UiHelper.customAlertBox(context, "Please enter your name");
-    else if(email=="")
+    } else if(email=="")
       UiHelper.customAlertBox(context, "Please enter your email");
     else if(phone=="")
       UiHelper.customAlertBox(context, "Please enter your phone number");
@@ -43,8 +42,9 @@ class _registration_pageState extends State<registration_page> {
         UserCredential? userCrediantial;
         try{
           userCrediantial=await FirebaseAuth.instance.createUserWithEmailAndPassword(email: email, password: password).then((value) {
-            Navigator.push(context, MaterialPageRoute(builder: (context)=>login_page()));
+            Navigator.push(context, MaterialPageRoute(builder: (context)=>const login_page()));
             _saveProfile(userId: email,name: nameController.text.toString(),phone: phoneController.text.toString(),email: email);
+            return null;
           });
         }
         on FirebaseAuthException catch(ex){
@@ -82,7 +82,7 @@ class _registration_pageState extends State<registration_page> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    Future.delayed(Duration(seconds: 1),(){
+    Future.delayed(const Duration(seconds: 1),(){
       setState(() {
         _isLoading=false;
       });
@@ -90,7 +90,7 @@ class _registration_pageState extends State<registration_page> {
   }
   @override
   Widget build(BuildContext context) {
-    return _isLoading?Scaffold(
+    return _isLoading?const Scaffold(
       body: Center(
         child: SpinKitWaveSpinner(color: Colors.blue,size: 150,waveColor: Colors.blue,),
       ),
@@ -104,37 +104,37 @@ class _registration_pageState extends State<registration_page> {
               // mainAxisAlignment: MainAxisAlignment.center,
               // crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Expanded(flex:3,child: SizedBox()),
-                Expanded(flex: 4,
+                const Expanded(flex:3,child: SizedBox()),
+                const Expanded(flex: 4,
                   child: Text('Create a new account',textAlign: TextAlign.center,style: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 22,
 
                   ),),
                 ),
-                Gap(10),
+                const Gap(10),
                 //SizedBox(height: 10,),
                 Expanded(flex: 4,
                   child: Container(
-                    margin: EdgeInsets.symmetric(horizontal: 20),
+                    margin: const EdgeInsets.symmetric(horizontal: 20),
                     child: TextField(
                       controller: nameController,
-                      style: TextStyle(
+                      style: const TextStyle(
                           color: Colors.black87,
                           fontWeight: FontWeight.bold
                       ),
 
                       decoration: InputDecoration(
                           hintText: 'Name',
-                          hintStyle: TextStyle(
+                          hintStyle: const TextStyle(
                               color: Colors.grey,
                               fontWeight: FontWeight.bold,
                               fontSize: 15
                           ),
-                          prefixIcon: Icon(Icons.person,color: Colors.blue,),
+                          prefixIcon: const Icon(Icons.person,color: Colors.blue,),
                           focusedBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(10),
-                            borderSide: BorderSide(
+                            borderSide: const BorderSide(
                                 color: Colors.grey,
                                 width: 3.0
                             ),
@@ -143,7 +143,7 @@ class _registration_pageState extends State<registration_page> {
                           ),
                           enabledBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(10),
-                              borderSide: BorderSide(
+                              borderSide: const BorderSide(
                                   color: Colors.black
                               )
                           )
@@ -151,29 +151,29 @@ class _registration_pageState extends State<registration_page> {
                     ),
                   ),
                 ),
-                Gap(10),
+                const Gap(10),
                 //SizedBox(height: 10,),
                 Expanded(flex: 4,
                   child: Container(
-                    margin: EdgeInsets.symmetric(horizontal: 20),
+                    margin: const EdgeInsets.symmetric(horizontal: 20),
                     child: TextField(
                       controller: emailController,
-                      style: TextStyle(
+                      style: const TextStyle(
                           color: Colors.black87,
                           fontWeight: FontWeight.bold
                       ),
                       keyboardType: TextInputType.emailAddress,
                       decoration: InputDecoration(
                           hintText: 'E-mail',
-                          hintStyle: TextStyle(
+                          hintStyle: const TextStyle(
                               color: Colors.grey,
                               fontWeight: FontWeight.bold,
                               fontSize: 15
                           ),
-                          prefixIcon: Icon(Icons.email,color: Colors.blue,),
+                          prefixIcon: const Icon(Icons.email,color: Colors.blue,),
                           focusedBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(10),
-                            borderSide: BorderSide(
+                            borderSide: const BorderSide(
                                 color: Colors.grey,
                                 width: 3.0
                             ),
@@ -182,7 +182,7 @@ class _registration_pageState extends State<registration_page> {
                           ),
                           enabledBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(10),
-                              borderSide: BorderSide(
+                              borderSide: const BorderSide(
                                   color: Colors.black
                               )
                           )
@@ -190,29 +190,29 @@ class _registration_pageState extends State<registration_page> {
                     ),
                   ),
                 ),
-                Gap(10),
+                const Gap(10),
                 //SizedBox(height: 10,),
                 Expanded(flex: 4,
                   child: Container(
-                    margin: EdgeInsets.symmetric(horizontal: 20),
+                    margin: const EdgeInsets.symmetric(horizontal: 20),
                     child: TextField(
                       controller: phoneController,
-                      style: TextStyle(
+                      style: const TextStyle(
                           color: Colors.black87,
                           fontWeight: FontWeight.bold
                       ),
                       keyboardType: TextInputType.emailAddress,
                       decoration: InputDecoration(
                           hintText: 'Phone',
-                          hintStyle: TextStyle(
+                          hintStyle: const TextStyle(
                               color: Colors.grey,
                               fontWeight: FontWeight.bold,
                               fontSize: 15
                           ),
-                          prefixIcon: Icon(Icons.phone,color: Colors.blue,),
+                          prefixIcon: const Icon(Icons.phone,color: Colors.blue,),
                           focusedBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(10),
-                            borderSide: BorderSide(
+                            borderSide: const BorderSide(
                                 color: Colors.grey,
                                 width: 3.0
                             ),
@@ -221,7 +221,7 @@ class _registration_pageState extends State<registration_page> {
                           ),
                           enabledBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(10),
-                              borderSide: BorderSide(
+                              borderSide: const BorderSide(
                                   color: Colors.black
                               )
                           )
@@ -229,30 +229,30 @@ class _registration_pageState extends State<registration_page> {
                     ),
                   ),
                 ),
-                Gap(10),
+                const Gap(10),
                 //SizedBox(height: 10,),
                 Expanded(flex: 4,
                   child: Container(
-                    margin: EdgeInsets.symmetric(horizontal: 20),
+                    margin: const EdgeInsets.symmetric(horizontal: 20),
                     child: TextField(
                       controller: passworrdController,
                       obscureText: true,
-                      style: TextStyle(
+                      style: const TextStyle(
                           color: Colors.black87,
                           fontWeight: FontWeight.bold
                       ),
 
                       decoration: InputDecoration(
                           hintText: 'Password',
-                          hintStyle: TextStyle(
+                          hintStyle: const TextStyle(
                               color: Colors.grey,
                               fontWeight: FontWeight.bold,
                               fontSize: 15
                           ),
-                          prefixIcon: Icon(Icons.lock,color: Colors.blue,),
+                          prefixIcon: const Icon(Icons.lock,color: Colors.blue,),
                           focusedBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(10),
-                            borderSide: BorderSide(
+                            borderSide: const BorderSide(
                                 color: Colors.grey,
                                 width: 3.0
                             ),
@@ -261,7 +261,7 @@ class _registration_pageState extends State<registration_page> {
                           ),
                           enabledBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(10),
-                              borderSide: BorderSide(
+                              borderSide: const BorderSide(
                                   color: Colors.black
                               )
                           )
@@ -269,15 +269,15 @@ class _registration_pageState extends State<registration_page> {
                     ),
                   ),
                 ),
-                Gap(10),
+                const Gap(10),
                 //SizedBox(height: 10,),
                 Expanded(flex: 4,
                   child: Container(
-                    margin: EdgeInsets.symmetric(horizontal: 20),
+                    margin: const EdgeInsets.symmetric(horizontal: 20),
                     child: TextField(
                       controller: confirmPassworrdController,
                       obscureText: _confirmPassObcure,
-                      style: TextStyle(
+                      style: const TextStyle(
                           color: Colors.black87,
                           fontWeight: FontWeight.bold
                       ),
@@ -290,15 +290,15 @@ class _registration_pageState extends State<registration_page> {
                         },),
 
                           hintText: 'Confirm Password',
-                          hintStyle: TextStyle(
+                          hintStyle: const TextStyle(
                               color: Colors.grey,
                               fontWeight: FontWeight.bold,
                               fontSize: 15
                           ),
-                          prefixIcon: Icon(Icons.lock,color: Colors.blue,),
+                          prefixIcon: const Icon(Icons.lock,color: Colors.blue,),
                           focusedBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(10),
-                            borderSide: BorderSide(
+                            borderSide: const BorderSide(
                                 color: Colors.grey,
                                 width: 3.0
                             ),
@@ -307,7 +307,7 @@ class _registration_pageState extends State<registration_page> {
                           ),
                           enabledBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(10),
-                              borderSide: BorderSide(
+                              borderSide: const BorderSide(
                                   color: Colors.black
                               )
                           )
@@ -315,7 +315,7 @@ class _registration_pageState extends State<registration_page> {
                     ),
                   ),
                 ),
-                Gap(20),
+                const Gap(20),
                 //SizedBox(height: 30,),
                 Expanded(flex:4 ,
 
@@ -324,35 +324,35 @@ class _registration_pageState extends State<registration_page> {
                     width: 190,
                     child: TextButton(onPressed: (){registerFunction(nameController.text.toString(),emailController.text.toString(),
                         phoneController.text.toString(), passworrdController.text.toString(),
-                        confirmPassworrdController.text.toString());}, child: Text('Create account',
+                        confirmPassworrdController.text.toString());},
+                        style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Colors.blue),
+
+                        ), child: const Text('Create account',
                       style: TextStyle(
                           color: Colors.black87,
                           fontSize: 15,
                           fontWeight: FontWeight.bold
-                      ),),
-                        style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Colors.blue),
-
-                        ),),
+                      ),),),
                   ),
                 ),
-                Gap(10),
+                const Gap(10),
 
                 Expanded(flex: 4,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text('Already have a account?',style: TextStyle(
+                      const Text('Already have a account?',style: TextStyle(
                           fontSize: 15
                       ),),
                       TextButton(onPressed: (){
                        // Navigator.push(context, MaterialPageRoute(builder: (context)=>login_page()));
                         Navigator.pop(context);
-                      }, child: Text('Login',style: TextStyle(
+                      }, child: const Text('Login',style: TextStyle(
                           fontSize: 15
                       ),))
                     ],),
                 ),
-                Gap(5)
+                const Gap(5)
 
               ],
             ),

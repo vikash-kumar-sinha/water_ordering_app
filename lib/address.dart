@@ -1,4 +1,3 @@
-import 'dart:developer';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -9,7 +8,7 @@ import 'package:intl/intl.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 class addAddress extends StatefulWidget {
-   addAddress({super.key,required this.smallBottleNumber,required this.largeBottleNumber,required this.currentUserEmail});
+   const addAddress({super.key,required this.smallBottleNumber,required this.largeBottleNumber,required this.currentUserEmail});
    static const String id="addAddress";
    final int smallBottleNumber;
    final int largeBottleNumber;
@@ -20,7 +19,7 @@ class addAddress extends StatefulWidget {
 }
 
 class _addAddressState extends State<addAddress> {
-  var _razorpay = Razorpay();
+  final _razorpay = Razorpay();
   TextEditingController roomNoController=TextEditingController();
 
    TextEditingController streetnameController=TextEditingController();
@@ -37,7 +36,7 @@ class _addAddressState extends State<addAddress> {
     _razorpay.on(Razorpay.EVENT_PAYMENT_ERROR, _handlePaymentError);
     _razorpay.on(Razorpay.EVENT_EXTERNAL_WALLET, _handleExternalWallet);
     super.initState();
-    Future.delayed(Duration(seconds: 1),(){
+    Future.delayed(const Duration(seconds: 1),(){
       setState(() {
         _isLoading=false;
       });
@@ -137,36 +136,36 @@ class _addAddressState extends State<addAddress> {
   }
    @override
   Widget build(BuildContext context) {
-    return _isLoading?Scaffold(
+    return _isLoading?const Scaffold(
       body: Center(
         child: SpinKitWaveSpinner(color: Colors.blue,size: 150,waveColor: Colors.blue,),
       ),
     ):Scaffold(
-      appBar: AppBar(title: Text('Add Address'),centerTitle: true,backgroundColor: Colors.grey[200],shape: Border(bottom: BorderSide(width: 3,color: Colors.grey)),),
+      appBar: AppBar(title: const Text('Add Address'),centerTitle: true,backgroundColor: Colors.grey[200],shape: const Border(bottom: BorderSide(width: 3,color: Colors.grey)),),
       body: SafeArea(
         child: Expanded(child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: ListView(
             children: [
-              Gap(10),
+              const Gap(10),
               Expanded(flex: 4,child: TextField(
                 controller: roomNoController,
-                style: TextStyle(
+                style: const TextStyle(
                     color: Colors.black87,
                     fontWeight: FontWeight.bold
                 ),
 
                 decoration: InputDecoration(
                     hintText: 'Room no',
-                    hintStyle: TextStyle(
+                    hintStyle: const TextStyle(
                         color: Colors.grey,
                         fontWeight: FontWeight.bold,
                         fontSize: 14
                     ),
-                    prefixIcon: Icon(Icons.room,color: Colors.blue,),
+                    prefixIcon: const Icon(Icons.room,color: Colors.blue,),
                     focusedBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10),
-                      borderSide: BorderSide(
+                      borderSide: const BorderSide(
                           color: Colors.grey,
                           width: 3.0
                       ),
@@ -175,31 +174,31 @@ class _addAddressState extends State<addAddress> {
                     ),
                     enabledBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10),
-                        borderSide: BorderSide(
+                        borderSide: const BorderSide(
                             color: Colors.black
                         )
                     )
                 ),
               )),
-              Gap(10),
+              const Gap(10),
               Expanded(flex: 4,child: TextField(
                 controller: streetnameController,
-                style: TextStyle(
+                style: const TextStyle(
                     color: Colors.black87,
                     fontWeight: FontWeight.bold
                 ),
 
                 decoration: InputDecoration(
                     hintText: 'Street name',
-                    hintStyle: TextStyle(
+                    hintStyle: const TextStyle(
                         color: Colors.grey,
                         fontWeight: FontWeight.bold,
                         fontSize: 14
                     ),
-                    prefixIcon: Icon(Icons.map,color: Colors.blue,),
+                    prefixIcon: const Icon(Icons.map,color: Colors.blue,),
                     focusedBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10),
-                      borderSide: BorderSide(
+                      borderSide: const BorderSide(
                           color: Colors.grey,
                           width: 3.0
                       ),
@@ -208,31 +207,31 @@ class _addAddressState extends State<addAddress> {
                     ),
                     enabledBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10),
-                        borderSide: BorderSide(
+                        borderSide: const BorderSide(
                             color: Colors.black
                         )
                     )
                 ),
               )),
-              Gap(10),
+              const Gap(10),
               Expanded(flex: 4,child: TextField(
                 controller: areaController,
-                style: TextStyle(
+                style: const TextStyle(
                     color: Colors.black87,
                     fontWeight: FontWeight.bold
                 ),
 
                 decoration: InputDecoration(
                     hintText: 'Area',
-                    hintStyle: TextStyle(
+                    hintStyle: const TextStyle(
                         color: Colors.grey,
                         fontWeight: FontWeight.bold,
                         fontSize: 14
                     ),
-                    prefixIcon: Icon(Icons.near_me,color: Colors.blue,),
+                    prefixIcon: const Icon(Icons.near_me,color: Colors.blue,),
                     focusedBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10),
-                      borderSide: BorderSide(
+                      borderSide: const BorderSide(
                           color: Colors.grey,
                           width: 3.0
                       ),
@@ -241,31 +240,31 @@ class _addAddressState extends State<addAddress> {
                     ),
                     enabledBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10),
-                        borderSide: BorderSide(
+                        borderSide: const BorderSide(
                             color: Colors.black
                         )
                     )
                 ),
               )),
-              Gap(10),
+              const Gap(10),
               Expanded(flex: 4,child: TextField(
                 controller: cityController,
-                style: TextStyle(
+                style: const TextStyle(
                     color: Colors.black87,
                     fontWeight: FontWeight.bold
                 ),
 
                 decoration: InputDecoration(
                     hintText: 'City',
-                    hintStyle: TextStyle(
+                    hintStyle: const TextStyle(
                         color: Colors.grey,
                         fontWeight: FontWeight.bold,
                         fontSize: 14
                     ),
-                    prefixIcon: Icon(Icons.location_city,color: Colors.blue,),
+                    prefixIcon: const Icon(Icons.location_city,color: Colors.blue,),
                     focusedBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10),
-                      borderSide: BorderSide(
+                      borderSide: const BorderSide(
                           color: Colors.grey,
                           width: 3.0
                       ),
@@ -274,31 +273,31 @@ class _addAddressState extends State<addAddress> {
                     ),
                     enabledBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10),
-                        borderSide: BorderSide(
+                        borderSide: const BorderSide(
                             color: Colors.black
                         )
                     )
                 ),
               )),
-              Gap(10),
+              const Gap(10),
               Expanded(flex: 4,child: TextField(
                 controller: pincodeController,
-                style: TextStyle(
+                style: const TextStyle(
                     color: Colors.black87,
                     fontWeight: FontWeight.bold
                 ),
 
                 decoration: InputDecoration(
                     hintText: 'Pincode',
-                    hintStyle: TextStyle(
+                    hintStyle: const TextStyle(
                         color: Colors.grey,
                         fontWeight: FontWeight.bold,
                         fontSize: 14
                     ),
-                    prefixIcon: Icon(Icons.pin_drop_outlined,color: Colors.blue,),
+                    prefixIcon: const Icon(Icons.pin_drop_outlined,color: Colors.blue,),
                     focusedBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10),
-                      borderSide: BorderSide(
+                      borderSide: const BorderSide(
                           color: Colors.grey,
                           width: 3.0
                       ),
@@ -307,25 +306,25 @@ class _addAddressState extends State<addAddress> {
                     ),
                     enabledBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10),
-                        borderSide: BorderSide(
+                        borderSide: const BorderSide(
                             color: Colors.black
                         )
                     )
                 ),
               )),
-              Gap(10),
+              const Gap(10),
               Expanded(flex: 5,child: Container(
-                margin: EdgeInsets.symmetric(vertical: 30),
+                margin: const EdgeInsets.symmetric(vertical: 30),
                 child: TextButton(onPressed: () {
 
                   checkCityPincode();
 
                   //OrderHistoryDataType order=OrderHistoryDataType(large: 10, small: 5, date: DateTime(2022), time:DateTime(8), price: 400);
                   //OrderHistoryList.add(order);},
-                },child: Text('Proceed for Payment',style: TextStyle(color: Colors.black87,
-                    fontWeight: FontWeight.bold,fontSize: 15),),style: ButtonStyle(
+                },style: ButtonStyle(
 
-                    backgroundColor: MaterialStateProperty.all(Colors.blue)),),
+                    backgroundColor: MaterialStateProperty.all(Colors.blue)),child: const Text('Proceed for Payment',style: TextStyle(color: Colors.black87,
+                    fontWeight: FontWeight.bold,fontSize: 15),),),
               ))
             ],
           ),
