@@ -6,6 +6,7 @@ import 'orderList.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 class OrderHistory extends StatefulWidget {
   const OrderHistory({super.key});
@@ -17,6 +18,7 @@ class OrderHistory extends StatefulWidget {
 
 class _OrderHistoryState extends State<OrderHistory> {
   final user=FirebaseFirestore.instance;
+  bool _isLoading=true;
 
   //List<OrderHistoryDataType> ordersList=[];
   List<dynamic> ordersList=[];
@@ -62,13 +64,22 @@ class _OrderHistoryState extends State<OrderHistory> {
   void initState() {
     // TODO: implement initState
     super.initState();
+    Future.delayed(Duration(seconds: 2),(){
+      setState(() {
+        _isLoading=false;
+      });
+    });
     getDocuments();
   }
 
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      child: Scaffold(
+      child: _isLoading?Scaffold(
+        body: Center(
+          child: SpinKitWaveSpinner(color: Colors.blue,size: 150,waveColor: Colors.blue,),
+        ),
+      ):Scaffold(
         appBar: AppBar(foregroundColor: Colors.black87,
           title: Text('Your Orders',style: TextStyle(
               color: Colors.black87,

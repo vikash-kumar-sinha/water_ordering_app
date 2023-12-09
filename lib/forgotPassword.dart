@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:water_ordering_app/orderList.dart';
 
 class ForgotPassword extends StatefulWidget {
@@ -11,7 +12,7 @@ class ForgotPassword extends StatefulWidget {
 
 class _ForgotPasswordState extends State<ForgotPassword> {
   TextEditingController emailController=TextEditingController();
-
+  bool _isLoading=true;
   forgotPassword(String email)async{
     if(email=="")
       return UiHelper.customAlertBox(context, "Please enter email to Reset Password");
@@ -22,9 +23,23 @@ class _ForgotPasswordState extends State<ForgotPassword> {
 
   }
   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    Future.delayed(Duration(seconds: 1),(){
+      setState(() {
+        _isLoading=false;
+      });
+    });
+  }
+  @override
   Widget build(BuildContext context) {
     return SafeArea(
-      child: Scaffold(
+      child: _isLoading?Scaffold(
+        body: Center(
+          child: SpinKitWaveSpinner(color: Colors.blue,size: 150,waveColor: Colors.blue,),
+        ),
+      ):Scaffold(
         appBar: AppBar(
           shape: Border(bottom: BorderSide(width: 3,color: Colors.grey,)),
           title: Text('Forgot Password',style: TextStyle(

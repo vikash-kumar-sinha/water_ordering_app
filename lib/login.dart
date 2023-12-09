@@ -1,10 +1,12 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:water_ordering_app/dashboard.dart';
 import 'package:water_ordering_app/orderList.dart';
 import 'package:water_ordering_app/registration.dart';
 import 'registration.dart';
 import 'forgotPassword.dart';
+
 
 class login_page extends StatefulWidget {
   static const String id='login_page';
@@ -18,7 +20,7 @@ class _login_pageState extends State<login_page> {
   TextEditingController emailController=TextEditingController();
   TextEditingController passwordController=TextEditingController();
   bool _passObcure=true;
-
+  bool _isLoading=true;
   login(String email,String password)async{
     if(email=="" && password=="")
       UiHelper.customAlertBox(context, "Please enter required crediantials");
@@ -37,8 +39,22 @@ class _login_pageState extends State<login_page> {
       }
   }
   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    Future.delayed(Duration(seconds: 1),(){
+      setState(() {
+        _isLoading=false;
+      });
+    });
+  }
+  @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return _isLoading?Scaffold(
+      body: Center(
+        child: SpinKitWaveSpinner(color: Colors.blue,size: 150,waveColor: Colors.blue,),
+      ),
+    ):Scaffold(
       body: SafeArea(
         child: Expanded(
           child: Column(

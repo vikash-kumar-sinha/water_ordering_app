@@ -6,6 +6,7 @@ import 'package:razorpay_flutter/razorpay_flutter.dart';
 import 'orderList.dart';
 import 'package:gap/gap.dart';
 import 'package:intl/intl.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 class addAddress extends StatefulWidget {
    addAddress({super.key,required this.smallBottleNumber,required this.largeBottleNumber,required this.currentUserEmail});
@@ -28,7 +29,7 @@ class _addAddressState extends State<addAddress> {
 
    TextEditingController cityController=TextEditingController();
    TextEditingController pincodeController=TextEditingController();
-
+   bool _isLoading=true;
   @override
   void initState() {
     // TODO: implement initState
@@ -36,6 +37,11 @@ class _addAddressState extends State<addAddress> {
     _razorpay.on(Razorpay.EVENT_PAYMENT_ERROR, _handlePaymentError);
     _razorpay.on(Razorpay.EVENT_EXTERNAL_WALLET, _handleExternalWallet);
     super.initState();
+    Future.delayed(Duration(seconds: 1),(){
+      setState(() {
+        _isLoading=false;
+      });
+    });
   }
   void _handlePaymentSuccess(PaymentSuccessResponse response) {
     // Do something when payment succeeds
@@ -131,7 +137,11 @@ class _addAddressState extends State<addAddress> {
   }
    @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return _isLoading?Scaffold(
+      body: Center(
+        child: SpinKitWaveSpinner(color: Colors.blue,size: 150,waveColor: Colors.blue,),
+      ),
+    ):Scaffold(
       appBar: AppBar(title: Text('Add Address'),centerTitle: true,backgroundColor: Colors.grey[200],shape: Border(bottom: BorderSide(width: 3,color: Colors.grey)),),
       body: SafeArea(
         child: Expanded(child: Padding(

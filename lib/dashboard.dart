@@ -13,6 +13,7 @@ import 'orderList.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'address.dart';
 import 'package:gap/gap.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 class dashboard extends StatefulWidget {
   static const String id='dashboard';
@@ -25,7 +26,16 @@ class dashboard extends StatefulWidget {
 
 class _dashboardState extends State<dashboard> {
   String? userName;
+  bool _isLoading=true;
+  late final Image smallImage;
+  late final Image largeImage;
 
+  getAllImages()async{
+    setState(() {
+      smallImage=Image.asset('images/small_bottle.jpg');
+      largeImage=Image.asset('images/large_bottle.jpg');
+    });
+  }
 
   getUser()async{
     final FirebaseAuth auth=  FirebaseAuth.instance;
@@ -55,13 +65,23 @@ logOut()async{
   void initState() {
     // TODO: implement initState
     super.initState();
+    Future.delayed(Duration(seconds: 3),(){
+      setState(() {
+        _isLoading=false;
+      });
+    });
     getUser();
+    getAllImages();
   }
   @override
   Widget build(BuildContext context) {
     return SafeArea(
 
-      child: Scaffold(
+      child: _isLoading?Scaffold(
+        body: Center(
+          child: SpinKitWaveSpinner(color: Colors.blue,size: 150,waveColor: Colors.blue,),
+        ),
+      ):Scaffold(
         backgroundColor: Colors.white,
 
         appBar: AppBar(
@@ -79,7 +99,7 @@ logOut()async{
           ),
 
         ),
-        body:NewOrder(currentUserEmail: widget.currentUserEmail)
+        body:NewOrder(currentUserEmail: widget.currentUserEmail,smallImage: smallImage,largeImage: largeImage,)
       ),
     );
   }
@@ -104,8 +124,10 @@ class RoundedIconButton extends StatelessWidget {
 }
 
 class NewOrder extends StatefulWidget {
-  const NewOrder({super.key,required this.currentUserEmail});
+  const NewOrder({super.key,required this.currentUserEmail,required this.largeImage,required this.smallImage});
   final String? currentUserEmail;
+  final Image smallImage;
+  final Image largeImage;
 
   @override
   State<NewOrder> createState() => _NewOrderState();
@@ -151,7 +173,7 @@ class _NewOrderState extends State<NewOrder> {
             ),borderRadius: BorderRadius.circular(20)),
               child: Column(
                 children: [
-                  Expanded(flex:6,child: Row(children: [Expanded(child: Image.asset('images/small_bottle.jpg')),
+                  Expanded(flex:6,child: Row(children: [Expanded(child: widget.smallImage ),
                     Expanded(child: Row(
                       mainAxisAlignment:MainAxisAlignment.center,
                       children: [
@@ -172,7 +194,7 @@ class _NewOrderState extends State<NewOrder> {
                         })
                       ],))],)),
                   SizedBox(child: Divider(height: 3,thickness: 3.0,color: Colors.blue,),),
-                  Expanded(flex:6,child: Row(children: [Expanded(child: Image.asset('images/large_bottle.jpg')),
+                  Expanded(flex:6,child: Row(children: [Expanded(child: widget.largeImage),
                     Expanded(child: Row(
                       mainAxisAlignment:MainAxisAlignment.center,
                       children: [

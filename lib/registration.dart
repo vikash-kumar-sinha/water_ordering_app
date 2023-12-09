@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:gap/gap.dart';
 import 'package:water_ordering_app/login.dart';
 import 'package:water_ordering_app/orderList.dart';
@@ -24,6 +25,7 @@ class _registration_pageState extends State<registration_page> {
   //String orderId='10001';
 
   bool _confirmPassObcure=true;
+  bool _isLoading=true;
 
   registerFunction(String name,String email,String phone,String password,String confirmPassword)async{
     if(name=="")
@@ -76,10 +78,23 @@ class _registration_pageState extends State<registration_page> {
 
     });
   }
-
+@override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    Future.delayed(Duration(seconds: 1),(){
+      setState(() {
+        _isLoading=false;
+      });
+    });
+  }
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return _isLoading?Scaffold(
+      body: Center(
+        child: SpinKitWaveSpinner(color: Colors.blue,size: 150,waveColor: Colors.blue,),
+      ),
+    ):Scaffold(
       body: SafeArea(
         child: Expanded(
           child: Padding(
