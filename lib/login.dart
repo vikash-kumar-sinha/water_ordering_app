@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:gap/gap.dart';
 import 'package:water_ordering_app/dashboard.dart';
 import 'package:water_ordering_app/orderList.dart';
 import 'package:water_ordering_app/registration.dart';
@@ -57,58 +58,59 @@ class _login_pageState extends State<login_page> {
     ):Scaffold(
       body: SafeArea(
         child: Expanded(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
+          child: ListView(
+            // mainAxisAlignment: MainAxisAlignment.center,
+            // crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               // Expanded(flex:4,child: SizedBox()),
               Expanded(flex: 7,child: Image.asset('images/logo.png',height: 200.0,width: 200.0,)),
 
               const Expanded(flex: 3,
-                child: Text('Welcome back',style: TextStyle(
+                child: Text('Welcome back',textAlign: TextAlign.center,style: TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 22,
                 ),),
               ),
-              //SizedBox(height: 30,),
+              Gap(20),
               Expanded(flex: 3,
                 child: Container(
                   margin: const EdgeInsets.symmetric(horizontal: 20),
                   child: TextField(
                     controller: emailController,
                     style: const TextStyle(
-                      color: Colors.black87,
-                      fontWeight: FontWeight.bold
+                        color: Colors.black87,
+                        fontWeight: FontWeight.bold
                     ),
                     keyboardType: TextInputType.emailAddress,
                     decoration: InputDecoration(
-                      hintText: 'E-mail',
-                      hintStyle: const TextStyle(
-                        color: Colors.grey,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 15
-                      ),
-                      prefixIcon: const Icon(Icons.email,color: Colors.blue,),
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10),
-                        borderSide: const BorderSide(
-                          color: Colors.grey,
-                          width: 3.0
+                        hintText: 'E-mail',
+                        hintStyle: const TextStyle(
+                            color: Colors.grey,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 15
                         ),
+                        prefixIcon: const Icon(Icons.email,color: Colors.blue,),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10),
+                          borderSide: const BorderSide(
+                              color: Colors.grey,
+                              width: 3.0
+                          ),
 
 
-                      ),
-                      enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10),
-                        borderSide: const BorderSide(
-                          color: Colors.black
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10),
+                            borderSide: const BorderSide(
+                                color: Colors.black
+                            )
                         )
-                      )
                     ),
                   ),
                 ),
               ),
               //SizedBox(height: 10,),
+              Gap(20),
               Expanded(flex: 3,
                 child: Container(
                   margin: const EdgeInsets.symmetric(horizontal: 20),

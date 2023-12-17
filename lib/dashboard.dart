@@ -10,9 +10,28 @@ import 'package:water_ordering_app/history.dart';
 import 'package:water_ordering_app/login.dart';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:water_ordering_app/orderList.dart';
 import 'address.dart';
 import 'package:gap/gap.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'imageCarsoul.dart';
+const story="""It all started with a simple observation: access to clean, refreshing water shouldn't be a luxury. We saw the struggle of lugging heavy bottles and the frustration of unreliable delivery services. Inspired by a vision of making sustainable hydration accessible to everyone, [App Name] was born.
+""";
+const additional="""Add a personal touch by mentioning the founders' story or what sparked their passion for water delivery.
+Highlight your unique selling points, such as local sourcing, eco-friendly packaging, or delivery flexibility.
+Showcase your commitment to sustainability with data on your environmental initiatives.
+Include a call to action to encourage users to download the app and join your mission.""";
+const mission="""Delivering Purity: We partner with trusted local sources to bring you the highest quality water, rigorously tested to meet the strictest standards. Whether it's spring water, natural mineral water, or filtered options, we ensure every drop is delicious and healthy.
+Convenience Reimagined: Forget bulky bottles and inconvenient refills. Order your water with a few taps in our user-friendly app, and we'll deliver it straight to your doorstep, on your schedule.
+Sustainability at Heart: We're committed to minimizing our environmental footprint. We use reusable glass bottles and promote recycling initiatives to reduce plastic waste. Every sip with [App Name] is a step towards a greener future.
+Giving Back to the Community: We believe in making a difference beyond your doorstep. We partner with local charities and water conservation projects to ensure everyone has access to clean water and a healthy environment.
+Join the Hydration Revolution:
+
+With [App Name], you're not just choosing water, you're choosing a sustainable future. Every order supports our mission to deliver pure hydration and a healthier planet, one sip at a time.
+
+Ready to experience the difference? Download our app and quench your thirst, the responsible way!""";
+const about="""At [App Name], we're more than just water delivery. We're a passionate team dedicated to providing you with the purest, most convenient hydration experience while nurturing a healthier planet.
+""";
 
 class dashboard extends StatefulWidget {
   static const String id='dashboard';
@@ -40,19 +59,29 @@ class _dashboardState extends State<dashboard> {
     final FirebaseAuth auth=  FirebaseAuth.instance;
     final User? user=auth.currentUser;
     final String? currentUserId=user?.email.toString();
-    log("id:$currentUserId");
+
     await FirebaseFirestore.instance.collection("Users").doc(currentUserId).get().then((snapshot){
       if(snapshot.exists)
         {
+
           setState(() {
+
             String uName=snapshot.data()?['name'];
+
             String trimname=uName.trim();
+
             List<String> words=trimname.split(" ");
-            userName="${words[0]} ${words[1]}";
+
+            userName="${words[0]}";
+
+            _isLoading=false;
           });
 
 
-        }
+        }else{
+        _isLoading=false;
+        return UiHelper.customAlertBox(context, "Data not found");
+      }
     });
   }
 logOut()async{
@@ -64,12 +93,14 @@ logOut()async{
   void initState() {
     // TODO: implement initState
     super.initState();
-    Future.delayed(const Duration(seconds: 3),(){
-      setState(() {
-        _isLoading=false;
-      });
-    });
+    // Future.delayed(const Duration(seconds: 3),(){
+    //   setState(() {
+    //     _isLoading=false;
+    //   });
+    // });
     getUser();
+
+
     getAllImages();
   }
   @override
@@ -98,7 +129,73 @@ logOut()async{
           ),
 
         ),
-        body:NewOrder(currentUserEmail: widget.currentUserEmail,smallImage: smallImage,largeImage: largeImage,)
+
+        body:ListView(
+          children: [
+            NoonLooping(),
+            Gap(20),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Container(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text('About the Company',style: aboutTextStyle,),
+                    SizedBox(child: Divider(thickness: 3,color: Colors.black87,),width: 150,),
+                    Card(color: Colors.blue[300],elevation:5,child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(about,softWrap: true,textAlign: TextAlign.justify,style: cardtextStyle),
+                    )),
+                    Gap(20),
+                    Text('Our Story',style: aboutTextStyle,),
+                    SizedBox(child: Divider(thickness: 3,color: Colors.black87,),width: 70,),
+                    Card(color: Colors.blue[300],elevation:5,child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(story,softWrap: true,textAlign: TextAlign.justify,style: cardtextStyle),
+                    )),
+                    Gap(20),
+                    Text('Our Mission',style: aboutTextStyle,),
+                    SizedBox(child: Divider(thickness: 3,color: Colors.black87,),width: 90,),
+                    Card(color: Colors.blue[300],elevation:5,child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(mission,softWrap: true,textAlign: TextAlign.justify,style: cardtextStyle),
+                    )),
+                    Gap(20),
+                    Text(' Additional points to consider',style: aboutTextStyle,),
+                    SizedBox(child: Divider(thickness: 3,color: Colors.black87,),width: 220,),
+                    Card(color: Colors.blue[300],elevation:5,child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(additional,softWrap: true,textAlign: TextAlign.justify,style: cardtextStyle),
+                    )),
+                    Gap(20),
+                    Text('Founder',style: aboutTextStyle,),
+                    SizedBox(child: Divider(thickness: 3,color: Colors.black87,),width: 65,),
+                    Column(
+                      children: [
+                        CircleAvatar(radius: 80,backgroundImage: AssetImage('images/team-3.jpg')),
+                        Text('Mr. Anand Kumar',style: aboutTextStyle,)
+                      ],
+                    )
+                  ],
+                ),
+              ),
+            ),
+            Divider(thickness: 2,),
+            Gap(20)
+
+
+          ],
+        ),
+        floatingActionButton: FloatingActionButton.extended(
+          onPressed: ()=>Navigator.push(context, MaterialPageRoute(builder: (context)=>New(currentUserEmail: widget.currentUserEmail,smallImage: smallImage,largeImage: largeImage,),)),
+          backgroundColor: Colors.blue,
+          icon: Icon(Icons.add),
+          label: Text('New Order',style: const TextStyle(
+              color: Colors.black87,
+              fontSize: 13,
+              fontWeight: FontWeight.bold
+          ),),
+        ),
       ),
     );
   }
@@ -148,23 +245,7 @@ class _NewOrderState extends State<NewOrder> {
         child: Column(
           children: [
             const Gap(10),
-            Expanded(flex: 1,child: Container(
-              decoration: BoxDecoration(borderRadius: BorderRadius.circular(25),color: Colors.blue[200]),
-              margin: const EdgeInsets.symmetric(horizontal: 100,vertical: 3),
-              height: 15,
-              width: 150,
-              padding: const EdgeInsets.symmetric(vertical: 7),
 
-              child: const Text('New order',
-
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                    color: Colors.black87,
-                    fontSize: 15,
-                    fontWeight: FontWeight.bold
-                ),),
-            ),),
-            const SizedBox(height: 20,),
             Expanded(
               flex:7,child: Container(decoration: BoxDecoration(border: Border.all(
                 color: Colors.blue,
@@ -255,3 +336,40 @@ class _NewOrderState extends State<NewOrder> {
 }
 
 
+class New extends StatefulWidget {
+  const New({super.key,required this.currentUserEmail,required this.largeImage,required this.smallImage});
+  final String? currentUserEmail;
+  final Image smallImage;
+  final Image largeImage;
+
+
+  @override
+  State<New> createState() => _NewState();
+}
+
+class _NewState extends State<New> {
+  bool _isLoading=true;
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    Future.delayed(Duration(seconds: 1),(){
+      setState(() {
+        _isLoading=false;
+      });
+    });
+  }
+  @override
+  Widget build(BuildContext context) {
+    return SafeArea(
+      child: _isLoading?Scaffold(
+        body: Center(
+          child: SpinKitWaveSpinner(color: Colors.blue,size: 150,waveColor: Colors.blue,),
+        ),
+      ):Scaffold(
+        appBar: AppBar(title: Text('New Order'),centerTitle: true,backgroundColor: Colors.blue,),
+        body: NewOrder(currentUserEmail: widget.currentUserEmail,smallImage: widget.smallImage,largeImage: widget.largeImage,),
+      ),
+    );
+  }
+}

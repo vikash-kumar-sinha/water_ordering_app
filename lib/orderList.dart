@@ -37,3 +37,18 @@ const TextStyle orderTextstyle=TextStyle(
   fontSize: 10,
   fontWeight: FontWeight.bold
 );
+ TextStyle aboutTextStyle=TextStyle(
+  fontSize: 15,
+  fontWeight: FontWeight.bold,
+
+    shadows: [
+      Shadow(
+        offset: Offset(5.0, 5.0),
+        blurRadius: 5.0,
+        color: Colors.white.withOpacity(0.5),
+      ),
+    ],
+
+);
+
+const  TextStyle cardtextStyle=TextStyle(fontWeight: FontWeight.bold,fontSize: 12,color: Colors.white);
