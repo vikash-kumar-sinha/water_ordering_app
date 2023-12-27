@@ -172,16 +172,17 @@ logOut()async{
                     SizedBox(child: Divider(thickness: 3,color: Colors.black87,),width: 65,),
                     Column(
                       children: [
-                        CircleAvatar(radius: 80,backgroundImage: AssetImage('images/team-3.jpg')),
-                        Text('Mr. Anand Kumar',style: aboutTextStyle,)
+                        CircleAvatar(radius: 80,backgroundImage: AssetImage('images/vikas.jpeg')),
+                        Text('Mr. Vikash Kumar Sinha',style: aboutTextStyle,)
                       ],
                     )
                   ],
                 ),
               ),
             ),
+
             Divider(thickness: 2,),
-            Gap(20)
+            Gap(60)
 
 
           ],

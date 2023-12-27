@@ -1,11 +1,15 @@
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:razorpay_flutter/razorpay_flutter.dart';
+import 'package:water_ordering_app/dashboard.dart';
+//import 'package:razorpay_flutter/razorpay_flutter.dart';
 import 'orderList.dart';
 import 'package:gap/gap.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:upi_payment_flutter/upi_payment_flutter.dart';
+import 'package:flutter/services.dart';
+
 
 class addAddress extends StatefulWidget {
    const addAddress({super.key,required this.smallBottleNumber,required this.largeBottleNumber,required this.currentUserEmail});
@@ -19,7 +23,8 @@ class addAddress extends StatefulWidget {
 }
 
 class _addAddressState extends State<addAddress> {
-  final _razorpay = Razorpay();
+  final upiPaymentHandler = UpiPaymentHandler();
+  //final _razorpay = Razorpay();
   TextEditingController roomNoController=TextEditingController();
 
    TextEditingController streetnameController=TextEditingController();
@@ -32,9 +37,9 @@ class _addAddressState extends State<addAddress> {
   @override
   void initState() {
     // TODO: implement initState
-    _razorpay.on(Razorpay.EVENT_PAYMENT_SUCCESS, _handlePaymentSuccess);
-    _razorpay.on(Razorpay.EVENT_PAYMENT_ERROR, _handlePaymentError);
-    _razorpay.on(Razorpay.EVENT_EXTERNAL_WALLET, _handleExternalWallet);
+    // _razorpay.on(Razorpay.EVENT_PAYMENT_SUCCESS, _handlePaymentSuccess);
+    // _razorpay.on(Razorpay.EVENT_PAYMENT_ERROR, _handlePaymentError);
+    // _razorpay.on(Razorpay.EVENT_EXTERNAL_WALLET, _handleExternalWallet);
     super.initState();
     Future.delayed(const Duration(seconds: 1),(){
       setState(() {
@@ -42,21 +47,22 @@ class _addAddressState extends State<addAddress> {
       });
     });
   }
-  void _handlePaymentSuccess(PaymentSuccessResponse response) {
-    // Do something when payment succeeds
-
-  }
-
-  void _handlePaymentError(PaymentFailureResponse response) {
-    // Do something when payment fails
-    storeAddress();
-    pushOrderInHistory();
-  }
-
-  void _handleExternalWallet(ExternalWalletResponse response) {
-    // Do something when an external wallet is selected
-  }
+  // void _handlePaymentSuccess(PaymentSuccessResponse response) {
+  //   // Do something when payment succeeds
+  //
+  // }
+  //
+  // void _handlePaymentError(PaymentFailureResponse response) {
+  //   // Do something when payment fails
+  //   storeAddress();
+  //   pushOrderInHistory();
+  // }
+  //
+  // void _handleExternalWallet(ExternalWalletResponse response) {
+  //   // Do something when an external wallet is selected
+  // }
   final user=FirebaseFirestore.instance;
+  late final  orderIdmain;
   storeAddress() async{
     final userRef=user.collection("Users").doc(widget.currentUserEmail).collection("address").doc(widget.currentUserEmail);
     await userRef.set({
@@ -75,6 +81,12 @@ class _addAddressState extends State<addAddress> {
     });
 
   }
+// @override
+//   void setState(VoidCallback fn) {
+//     // TODO: implement setState
+//     super.setState(fn);
+//     orderIdmain=generateOrderId();
+//   }
 
   String generateOrderId(){
     final now=DateTime.now();
@@ -100,36 +112,67 @@ class _addAddressState extends State<addAddress> {
     else
       {
 
-        var options = {
-          'key': 'rzp_test_f3F0m3jMymJZIi',
-          'amount': (20 * widget.smallBottleNumber +
-              30 * widget.largeBottleNumber) * 100,
-          //in the smallest currency sub-unit.
-          'name': 'Vikash Kumar Sinha',
-          'order_id': 'order_EMBFqjDHEEn80l',
-          // Generate order_id using Orders API
-          'description': 'test',
-          'timeout': 300,
-          // in seconds
-          'prefill': {
-            'contact': '7041477840',
-            'email': 'vikash.kumar@example.com'
+        // var options = {
+        //   'key': 'rzp_test_f3F0m3jMymJZIi',
+        //   'amount': (20 * widget.smallBottleNumber +
+        //       30 * widget.largeBottleNumber) * 100,
+        //   //in the smallest currency sub-unit.
+        //   'name': 'Vikash Kumar Sinha',
+        //   'order_id': 'order_EMBFqjDHEEn80l',
+        //   // Generate order_id using Orders API
+        //   'description': 'test',
+        //   'timeout': 300,
+        //   // in seconds
+        //   'prefill': {
+        //     'contact': '7041477840',
+        //     'email': 'vikash.kumar@example.com'
+        //   }
+        // };
+        // _razorpay.open(options);
+
+
+
+        Future<void> _initiateTransaction() async {
+          try {
+            bool success = await upiPaymentHandler.initiateTransaction(
+              payeeVpa: 'vikashsinha330@okaxis',
+              payeeName: 'Vikash Kumar Sinha',
+              transactionRefId: '${orderIdmain}',
+              transactionNote: 'Test transaction',
+              amount: 10.0,
+            );
+
+            if (success) {
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(content: Text('Transaction initiated successfully!')),
+              );
+              Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>dashboard(currentUserEmail: widget.currentUserEmail)));
+            } else {
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(content: Text('Transaction initiation failed.')),
+
+              );
+              Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>addAddress(smallBottleNumber: widget.smallBottleNumber, largeBottleNumber: widget.largeBottleNumber, currentUserEmail: widget.currentUserEmail)));
+            }
+          } on PlatformException catch (e) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(content: Text('Error: ${e.message}')),
+            );
           }
-        };
-        _razorpay.open(options);
+        }
       }
   }
 
   pushOrderInHistory()async{
-    final orderId=generateOrderId();
+
     final userRef=user.collection("Users").doc(widget.currentUserEmail).collection("Order History");
-    await userRef.doc(orderId).set({
+    await userRef.doc(orderIdmain).set({
       'small bottle':widget.smallBottleNumber.toString(),
       'Large bottle':widget.largeBottleNumber.toString(),
       'Price':(20*widget.smallBottleNumber+30*widget.largeBottleNumber).toString(),
       'Date':DateFormat.yMd().format(DateTime.now()).toString(),
       'Time':DateFormat().add_jm().format(DateTime.now()).toString(),
-      'Timestamp':orderId.toString()
+      'Timestamp':orderIdmain.toString()
     }).then((value) {
       UiHelper.customAlertBox(context, "Order Placed successfully");
     });
@@ -316,7 +359,9 @@ class _addAddressState extends State<addAddress> {
               Expanded(flex: 5,child: Container(
                 margin: const EdgeInsets.symmetric(vertical: 30),
                 child: TextButton(onPressed: () {
-
+                  setState(() {
+                    orderIdmain=generateOrderId();
+                  });
                   checkCityPincode();
 
                   //OrderHistoryDataType order=OrderHistoryDataType(large: 10, small: 5, date: DateTime(2022), time:DateTime(8), price: 400);
@@ -336,7 +381,8 @@ class _addAddressState extends State<addAddress> {
   @override
   void dispose() {
     // TODO: implement dispose
-    _razorpay.clear();
+    // _razorpay.clear();
+
     super.dispose();
   }
 }
