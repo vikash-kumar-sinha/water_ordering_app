@@ -9,6 +9,7 @@ import 'package:intl/intl.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:upi_payment_flutter/upi_payment_flutter.dart';
 import 'package:flutter/services.dart';
+import 'payment.dart';
 
 
 class addAddress extends StatefulWidget {
@@ -23,7 +24,7 @@ class addAddress extends StatefulWidget {
 }
 
 class _addAddressState extends State<addAddress> {
-  final upiPaymentHandler = UpiPaymentHandler();
+  //final upiPaymentHandler = UpiPaymentHandler();
   //final _razorpay = Razorpay();
   TextEditingController roomNoController=TextEditingController();
 
@@ -87,6 +88,36 @@ class _addAddressState extends State<addAddress> {
 //     super.setState(fn);
 //     orderIdmain=generateOrderId();
 //   }
+//   Future<void> _initiateTransaction() async {
+//     try {
+//       bool success = await upiPaymentHandler.initiateTransaction(
+//         payeeVpa: 'vikashsinha330@okaxis',
+//         payeeName: 'Vikash Kumar Sinha',
+//         transactionRefId: '${orderIdmain}',
+//         transactionNote: 'Test transaction',
+//         amount: 10.0,
+//       );
+//
+//       if (success) {
+//         ScaffoldMessenger.of(context).showSnackBar(
+//           SnackBar(content: Text('Transaction initiated successfully!')),
+//         );
+//         await storeAddress();
+//         await pushOrderInHistory();
+//         Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>dashboard(currentUserEmail: widget.currentUserEmail)));
+//       } else {
+//         ScaffoldMessenger.of(context).showSnackBar(
+//           SnackBar(content: Text('Transaction initiation failed.')),
+//
+//         );
+//         Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>addAddress(smallBottleNumber: widget.smallBottleNumber, largeBottleNumber: widget.largeBottleNumber, currentUserEmail: widget.currentUserEmail)));
+//       }
+//     } on PlatformException catch (e) {
+//       ScaffoldMessenger.of(context).showSnackBar(
+//         SnackBar(content: Text('Error: ${e.message}')),
+//       );
+//     }
+//   }
 
   String generateOrderId(){
     final now=DateTime.now();
@@ -129,37 +160,10 @@ class _addAddressState extends State<addAddress> {
         //   }
         // };
         // _razorpay.open(options);
+       // _initiateTransaction();
+        Navigator.push(context, MaterialPageRoute(builder: (context)=>startUpi()));
 
 
-
-        Future<void> _initiateTransaction() async {
-          try {
-            bool success = await upiPaymentHandler.initiateTransaction(
-              payeeVpa: 'vikashsinha330@okaxis',
-              payeeName: 'Vikash Kumar Sinha',
-              transactionRefId: '${orderIdmain}',
-              transactionNote: 'Test transaction',
-              amount: 10.0,
-            );
-
-            if (success) {
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(content: Text('Transaction initiated successfully!')),
-              );
-              Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>dashboard(currentUserEmail: widget.currentUserEmail)));
-            } else {
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(content: Text('Transaction initiation failed.')),
-
-              );
-              Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>addAddress(smallBottleNumber: widget.smallBottleNumber, largeBottleNumber: widget.largeBottleNumber, currentUserEmail: widget.currentUserEmail)));
-            }
-          } on PlatformException catch (e) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text('Error: ${e.message}')),
-            );
-          }
-        }
       }
   }
 
