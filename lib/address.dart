@@ -1,4 +1,6 @@
 
+import 'dart:convert';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:water_ordering_app/dashboard.dart';
@@ -10,6 +12,8 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:upi_payment_flutter/upi_payment_flutter.dart';
 import 'package:flutter/services.dart';
 import 'payment.dart';
+import 'package:phonepe_payment_sdk/phonepe_payment_sdk.dart';
+import 'package:crypto/crypto.dart';
 
 
 class addAddress extends StatefulWidget {
@@ -35,6 +39,37 @@ class _addAddressState extends State<addAddress> {
    TextEditingController cityController=TextEditingController();
    TextEditingController pincodeController=TextEditingController();
    bool _isLoading=true;
+  String environment="SANDBOX";
+  String appId="";
+  String merchantId="PGTESTPAYUAT";
+  bool enableLogging=true;
+  String checkSum="";
+  String saltKey="099eb0cd-02cf-4e2a-8aca-3e6c6aff0399";
+  String saltIndex="1";
+  String callbackUrl="www.google.com";
+  String body="";
+  Object? result;
+  String apiEndPoint = "/pg/v1/pay";
+  late final orderIdMain;
+
+
+  getCheckSum(){
+    final requestedData={
+      "merchantId": merchantId,
+      "merchantTransactionId": orderIdMain.toString(),
+      "merchantUserId": "90223250",
+      "amount": (20 * widget.smallBottleNumber +30 * widget.largeBottleNumber) * 100,
+      "mobileNumber": "9999999999",
+      "callbackUrl": callbackUrl,
+      "paymentInstrument": {
+        "type": "PAY_PAGE"}
+    };
+    String base64body=base64.encode(utf8.encode(json.encode(requestedData)));
+    checkSum= '${sha256.convert(utf8.encode(base64body+apiEndPoint+saltKey)).toString()}###$saltIndex';
+    return base64body;
+
+  }
+
   @override
   void initState() {
     // TODO: implement initState
@@ -42,11 +77,14 @@ class _addAddressState extends State<addAddress> {
     // _razorpay.on(Razorpay.EVENT_PAYMENT_ERROR, _handlePaymentError);
     // _razorpay.on(Razorpay.EVENT_EXTERNAL_WALLET, _handleExternalWallet);
     super.initState();
-    Future.delayed(const Duration(seconds: 1),(){
+    orderIdMain=generateOrderId();
+    Future.delayed(const Duration(seconds: 3),(){
       setState(() {
         _isLoading=false;
       });
     });
+    phonePeInit();
+    body=getCheckSum().toString();
   }
   // void _handlePaymentSuccess(PaymentSuccessResponse response) {
   //   // Do something when payment succeeds
@@ -55,39 +93,17 @@ class _addAddressState extends State<addAddress> {
   //
   // void _handlePaymentError(PaymentFailureResponse response) {
   //   // Do something when payment fails
-  //   storeAddress();
+    //storeAddress();
   //   pushOrderInHistory();
   // }
   //
   // void _handleExternalWallet(ExternalWalletResponse response) {
   //   // Do something when an external wallet is selected
   // }
-  final user=FirebaseFirestore.instance;
-  late final  orderIdmain;
-  storeAddress() async{
-    final userRef=user.collection("Users").doc(widget.currentUserEmail).collection("address").doc(widget.currentUserEmail);
-    await userRef.set({
-      'Room no.':roomNoController.text.toString(),
-      'Street Name':streetnameController.text.toString(),
-      'Area':areaController.text.toString(),
-      'City':cityController.text.toString(),
-      'Pincode':pincodeController.text.toString()
-    });
-    setState(() {
-      roomNoController.clear();
-      streetnameController.clear();
-      areaController.clear();
-      cityController.clear();
-      pincodeController.clear();
-    });
 
-  }
-// @override
-//   void setState(VoidCallback fn) {
-//     // TODO: implement setState
-//     super.setState(fn);
-//     orderIdmain=generateOrderId();
-//   }
+ // late final  orderIdmain;
+
+
 //   Future<void> _initiateTransaction() async {
 //     try {
 //       bool success = await upiPaymentHandler.initiateTransaction(
@@ -161,26 +177,16 @@ class _addAddressState extends State<addAddress> {
         // };
         // _razorpay.open(options);
        // _initiateTransaction();
-        Navigator.push(context, MaterialPageRoute(builder: (context)=>startUpi()));
+        //Navigator.push(context, MaterialPageRoute(builder: (context)=>startUpi(smallBottleNumber:widget.smallBottleNumber, largeBottleNumber: widget.largeBottleNumber, currentUserEmail: widget.currentUserEmail)));
+
+
+        startPgTransaction();
 
 
       }
   }
 
-  pushOrderInHistory()async{
 
-    final userRef=user.collection("Users").doc(widget.currentUserEmail).collection("Order History");
-    await userRef.doc(orderIdmain).set({
-      'small bottle':widget.smallBottleNumber.toString(),
-      'Large bottle':widget.largeBottleNumber.toString(),
-      'Price':(20*widget.smallBottleNumber+30*widget.largeBottleNumber).toString(),
-      'Date':DateFormat.yMd().format(DateTime.now()).toString(),
-      'Time':DateFormat().add_jm().format(DateTime.now()).toString(),
-      'Timestamp':orderIdmain.toString()
-    }).then((value) {
-      UiHelper.customAlertBox(context, "Order Placed successfully");
-    });
-  }
    @override
   Widget build(BuildContext context) {
     return _isLoading?const Scaffold(
@@ -363,9 +369,9 @@ class _addAddressState extends State<addAddress> {
               Expanded(flex: 5,child: Container(
                 margin: const EdgeInsets.symmetric(vertical: 30),
                 child: TextButton(onPressed: () {
-                  setState(() {
-                    orderIdmain=generateOrderId();
-                  });
+                  // setState(() {
+                  //   orderIdmain=generateOrderId();
+                  // });
                   checkCityPincode();
 
                   //OrderHistoryDataType order=OrderHistoryDataType(large: 10, small: 5, date: DateTime(2022), time:DateTime(8), price: 400);
@@ -381,6 +387,90 @@ class _addAddressState extends State<addAddress> {
       ),
 
     );
+  }
+  void phonePeInit() {
+    PhonePePaymentSdk.init(environment, appId, merchantId, enableLogging)
+        .then((val) => {
+      setState(() {
+        result = 'PhonePe SDK Initialized - $val';
+      })
+    })
+        .catchError((error) {
+      handleError(error);
+      return <dynamic>{};
+    });
+
+  }
+   final user=FirebaseFirestore.instance;
+  storeAddress() async{
+    final userRef=user.collection("Users").doc(widget.currentUserEmail).collection("address").doc(widget.currentUserEmail);
+    await userRef.set({
+      'Room no.':roomNoController.text.toString(),
+      'Street Name':streetnameController.text.toString(),
+      'Area':areaController.text.toString(),
+      'City':cityController.text.toString(),
+      'Pincode':pincodeController.text.toString()
+    });
+    setState(() {
+      roomNoController.clear();
+      streetnameController.clear();
+      areaController.clear();
+      cityController.clear();
+      pincodeController.clear();
+    });
+
+  }
+  pushOrderInHistory()async{
+
+    final userRef=user.collection("Users").doc(widget.currentUserEmail).collection("Order History");
+    await userRef.doc(orderIdMain).set({
+      'small bottle':widget.smallBottleNumber.toString(),
+      'Large bottle':widget.largeBottleNumber.toString(),
+      'Price':(20*widget.smallBottleNumber+30*widget.largeBottleNumber).toString(),
+      'Date':DateFormat.yMd().format(DateTime.now()).toString(),
+      'Time':DateFormat().add_jm().format(DateTime.now()).toString(),
+      'Timestamp':orderIdMain.toString()
+    }).then((value) {
+      UiHelper.customAlertBox(context, "Order Placed successfully");
+    });
+  }
+
+  void startPgTransaction() async{
+    PhonePePaymentSdk.startTransaction(body, callbackUrl, checkSum, "").then((response) => {
+      setState(() {
+        if (response != null)
+        {
+          String status = response['status'].toString();
+          String error = response['error'].toString();
+          if (status == 'SUCCESS')
+          {
+            result="Flow Completed - Status: Success!";
+            UiHelper.customAlertBox(context, "purchase successful and orderid is$orderIdMain");
+            storeAddress();
+            pushOrderInHistory();
+
+          }
+          else {
+            result= "Flow Completed - Status: $status and Error: $error";
+            UiHelper.customAlertBox(context, "error: $error");
+            Navigator.pop(context);
+          }
+        }
+        else {
+          result="Flow Incomplete";
+          UiHelper.customAlertBox(context, "Transaction failed");
+        }
+      })
+    }).catchError((error) {
+      // handleError(error)
+      return <dynamic>{};
+    });
+  }
+
+  void handleError(error) {
+    setState(() {
+      result={"Error":error};
+    });
   }
   @override
   void dispose() {

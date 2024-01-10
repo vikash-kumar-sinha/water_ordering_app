@@ -23,6 +23,10 @@ dependencies:
   carousel_slider: ^4.2.1
   upi_payment_flutter: ^0.0.4
   upi_india: ^3.0.1
+  phonepe_payment_sdk: ^1.1.0
+  crypto: ^3.0.3
+  animated_text_kit: ^4.2.2
+  visibility_detector: ^0.4.0+2
 
 dev_dependencies:
   flutter_test:
@@ -35,6 +39,10 @@ flutter:
   uses-material-design: true
   assets:
     - images/
+  fonts:
+    - family: heading
+      fonts:
+        - asset: fonts/Yrsa-BoldItalic.ttf
 
 
 

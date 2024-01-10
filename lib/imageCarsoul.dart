@@ -63,9 +63,12 @@ class NoonLooping extends StatelessWidget {
             options: CarouselOptions(
               aspectRatio: 2.0,
               enlargeCenterPage: true,
-              enableInfiniteScroll: false,
+              enableInfiniteScroll: true,
               initialPage: 2,
               autoPlay: true,
+              autoPlayInterval: Duration(seconds: 3),
+              autoPlayAnimationDuration: Duration(milliseconds: 500),
+              scrollDirection: Axis.horizontal
             ),
             items: imageSliders,
           ));

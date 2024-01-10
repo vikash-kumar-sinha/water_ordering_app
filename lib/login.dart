@@ -6,6 +6,8 @@ import 'package:water_ordering_app/dashboard.dart';
 import 'package:water_ordering_app/orderList.dart';
 import 'package:water_ordering_app/registration.dart';
 import 'forgotPassword.dart';
+//import 'newDashboard.dart';
+import 'dashboard.dart';
 
 
 class login_page extends StatefulWidget {

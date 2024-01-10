@@ -72,7 +72,8 @@ class _dashboardState extends State<dashboard> {
 
             List<String> words=trimname.split(" ");
 
-            userName="${words[0]}";
+            //userName="${words[0]}";
+            userName=words[0][0].toUpperCase()+words[0].substring(1);//+" "+words[1][0].toUpperCase()+words[1].substring(1);
 
             _isLoading=false;
           });
@@ -105,98 +106,97 @@ logOut()async{
   }
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
+    return _isLoading?const Scaffold(
+      body: Center(
+        child: SpinKitWaveSpinner(color: Colors.blue,size: 150,waveColor: Colors.blue,),
+      ),
+    ):Scaffold(
+      backgroundColor: Colors.white,
 
-      child: _isLoading?const Scaffold(
-        body: Center(
-          child: SpinKitWaveSpinner(color: Colors.blue,size: 150,waveColor: Colors.blue,),
-        ),
-      ):Scaffold(
-        backgroundColor: Colors.white,
-
-        appBar: AppBar(
-         shape: const Border(bottom: BorderSide(width: 3,color: Colors.grey,)),
-          backgroundColor: Colors.blue,
-          actions: [IconButton(onPressed: (){logOut();}, icon: const Icon(Icons.logout,color: Colors.black87,)),TextButton(onPressed: (){Navigator.push(context, MaterialPageRoute(builder: (context)=>const OrderHistory()));},child: const Icon(Icons.history,color: Colors.black87,))],
-          leading: Image.asset('images/logo.png',),
-          automaticallyImplyLeading: false,
-          title: Center(
-            child: Text('Hello,$userName',style: const TextStyle(
-              color: Colors.black87,
-              fontSize: 13,
-              fontWeight: FontWeight.bold
-            ),),
-          ),
-
-        ),
-
-        body:ListView(
-          children: [
-            NoonLooping(),
-            Gap(20),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Container(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text('About the Company',style: aboutTextStyle,),
-                    SizedBox(child: Divider(thickness: 3,color: Colors.black87,),width: 150,),
-                    Card(color: Colors.blue[300],elevation:5,child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Text(about,softWrap: true,textAlign: TextAlign.justify,style: cardtextStyle),
-                    )),
-                    Gap(20),
-                    Text('Our Story',style: aboutTextStyle,),
-                    SizedBox(child: Divider(thickness: 3,color: Colors.black87,),width: 70,),
-                    Card(color: Colors.blue[300],elevation:5,child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Text(story,softWrap: true,textAlign: TextAlign.justify,style: cardtextStyle),
-                    )),
-                    Gap(20),
-                    Text('Our Mission',style: aboutTextStyle,),
-                    SizedBox(child: Divider(thickness: 3,color: Colors.black87,),width: 90,),
-                    Card(color: Colors.blue[300],elevation:5,child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Text(mission,softWrap: true,textAlign: TextAlign.justify,style: cardtextStyle),
-                    )),
-                    Gap(20),
-                    Text(' Additional points to consider',style: aboutTextStyle,),
-                    SizedBox(child: Divider(thickness: 3,color: Colors.black87,),width: 220,),
-                    Card(color: Colors.blue[300],elevation:5,child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Text(additional,softWrap: true,textAlign: TextAlign.justify,style: cardtextStyle),
-                    )),
-                    Gap(20),
-                    Text('Founder',style: aboutTextStyle,),
-                    SizedBox(child: Divider(thickness: 3,color: Colors.black87,),width: 65,),
-                    Column(
-                      children: [
-                        CircleAvatar(radius: 80,backgroundImage: AssetImage('images/vikas.jpeg')),
-                        Text('Mr. Vikash Kumar Sinha',style: aboutTextStyle,)
-                      ],
-                    )
-                  ],
-                ),
-              ),
-            ),
-
-            Divider(thickness: 2,),
-            Gap(60)
-
-
-          ],
-        ),
-        floatingActionButton: FloatingActionButton.extended(
-          onPressed: ()=>Navigator.push(context, MaterialPageRoute(builder: (context)=>New(currentUserEmail: widget.currentUserEmail,smallImage: smallImage,largeImage: largeImage,),)),
-          backgroundColor: Colors.blue,
-          icon: Icon(Icons.add),
-          label: Text('New Order',style: const TextStyle(
-              color: Colors.black87,
-              fontSize: 13,
-              fontWeight: FontWeight.bold
+      appBar: AppBar(
+        elevation: 20,
+       shape: const Border(bottom: BorderSide(width: 3,color: Colors.grey,)),
+        backgroundColor: Colors.blue,
+        actions: [IconButton(onPressed: (){logOut();}, icon: const Icon(Icons.logout,color: Colors.white,)),TextButton(onPressed: (){Navigator.push(context, MaterialPageRoute(builder: (context)=>const OrderHistory()));},child: const Icon(Icons.history,color: Colors.white,))],
+        leading: Image.asset('images/logo.png',),
+        automaticallyImplyLeading: false,
+        title: Center(
+          child: Text('Hello, $userName',style: const TextStyle(
+            fontFamily: 'heading',
+            color: Colors.white,
+            fontSize: 18,
+            fontWeight: FontWeight.bold
           ),),
         ),
+
+      ),
+
+      body:ListView(
+        children: [
+          NoonLooping(),
+          Gap(20),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Container(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text('About the Company',style: aboutTextStyle,),
+                  SizedBox(child: Divider(thickness: 3,color: Colors.black87,),width: 150,),
+                  Card(color: Colors.blue[300],elevation:5,child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(about,softWrap: true,textAlign: TextAlign.justify,style: cardtextStyle),
+                  )),
+                  Gap(20),
+                  Text('Our Story',style: aboutTextStyle,),
+                  SizedBox(child: Divider(thickness: 3,color: Colors.black87,),width: 70,),
+                  Card(color: Colors.blue[300],elevation:5,child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(story,softWrap: true,textAlign: TextAlign.justify,style: cardtextStyle),
+                  )),
+                  Gap(20),
+                  Text('Our Mission',style: aboutTextStyle,),
+                  SizedBox(child: Divider(thickness: 3,color: Colors.black87,),width: 90,),
+                  Card(color: Colors.blue[300],elevation:5,child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(mission,softWrap: true,textAlign: TextAlign.justify,style: cardtextStyle),
+                  )),
+                  Gap(20),
+                  Text(' Additional points to consider',style: aboutTextStyle,),
+                  SizedBox(child: Divider(thickness: 3,color: Colors.black87,),width: 220,),
+                  Card(color: Colors.blue[300],elevation:5,child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(additional,softWrap: true,textAlign: TextAlign.justify,style: cardtextStyle),
+                  )),
+                  Gap(20),
+                  Text('Founder',style: aboutTextStyle,),
+                  SizedBox(child: Divider(thickness: 3,color: Colors.black87,),width: 65,),
+                  Column(
+                    children: [
+                      CircleAvatar(radius: 80,backgroundImage: AssetImage('images/vikas.jpeg')),
+                      Text('Mr. Vikash Kumar Sinha',style: aboutTextStyle,)
+                    ],
+                  )
+                ],
+              ),
+            ),
+          ),
+
+          Divider(thickness: 2,),
+          Gap(60)
+
+
+        ],
+      ),
+      floatingActionButton: FloatingActionButton.extended(
+        onPressed: ()=>Navigator.push(context, MaterialPageRoute(builder: (context)=>New(currentUserEmail: widget.currentUserEmail,smallImage: smallImage,largeImage: largeImage,),)),
+        backgroundColor: Colors.blue,
+        icon: Icon(Icons.add),
+        label: Text('New Order',style: const TextStyle(
+            color: Colors.black87,
+            fontSize: 13,
+            fontWeight: FontWeight.bold
+        ),),
       ),
     );
   }
@@ -231,13 +231,13 @@ class NewOrder extends StatefulWidget {
 }
 
 class _NewOrderState extends State<NewOrder> {
-  
+
   int smallBottleNumber=1;
 
   int largeBottleNumber=1;
 
 
-  
+
   @override
   Widget build(BuildContext context) {
     return  Padding(
@@ -308,7 +308,7 @@ class _NewOrderState extends State<NewOrder> {
 
                     ],
                   )),
-                  
+
 
                 ],
               ),),
@@ -318,7 +318,7 @@ class _NewOrderState extends State<NewOrder> {
             //Expanded(flex: 1,child: SizedBox(height: 10,)),
             Expanded(flex: 2,child: Container(
               margin: const EdgeInsets.symmetric(vertical: 30),
-              child: TextButton(onPressed: (){                
+              child: TextButton(onPressed: (){
                 Navigator.push(context, MaterialPageRoute(builder: (context)=>addAddress(
                     smallBottleNumber: smallBottleNumber, largeBottleNumber: largeBottleNumber,currentUserEmail: widget.currentUserEmail,)));
                 },style: ButtonStyle(
@@ -333,7 +333,7 @@ class _NewOrderState extends State<NewOrder> {
     );
 
   }
- 
+
 }
 
 

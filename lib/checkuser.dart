@@ -2,6 +2,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:water_ordering_app/dashboard.dart';
 import 'package:water_ordering_app/login.dart';
+//import 'newDashboard.dart';
+import 'dashboard.dart';
 
 class checkUser extends StatefulWidget {
   static const String id='checkUser';
