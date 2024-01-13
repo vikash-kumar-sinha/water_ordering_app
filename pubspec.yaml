@@ -43,6 +43,11 @@ flutter:
     - family: heading
       fonts:
         - asset: fonts/Yrsa-BoldItalic.ttf
-
+    - family: solway
+      fonts:
+        - asset: fonts/Solway-Medium.ttf
+    - family: salsa
+      fonts:
+        - asset: fonts/Salsa-Regular.ttf
 
 

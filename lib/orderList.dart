@@ -38,6 +38,7 @@ const TextStyle orderTextstyle=TextStyle(
   fontWeight: FontWeight.bold
 );
  TextStyle aboutTextStyle=TextStyle(
+   fontFamily: 'salsa',
   fontSize: 15,
   fontWeight: FontWeight.bold,
     color: Colors.black87,
@@ -52,4 +53,4 @@ const TextStyle orderTextstyle=TextStyle(
 
 );
 
-const  TextStyle cardtextStyle=TextStyle(fontWeight: FontWeight.bold,fontSize: 12,color: Colors.white);
+const  TextStyle cardtextStyle=TextStyle(fontFamily: 'solway',fontWeight: FontWeight.bold,fontSize: 12,color: Colors.white);
