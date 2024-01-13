@@ -194,7 +194,10 @@ class _addAddressState extends State<addAddress> {
         child: SpinKitWaveSpinner(color: Colors.blue,size: 150,waveColor: Colors.blue,),
       ),
     ):Scaffold(
-      appBar: AppBar(title: const Text('Add Address'),centerTitle: true,backgroundColor: Colors.grey[200],shape: const Border(bottom: BorderSide(width: 3,color: Colors.grey)),),
+      appBar: AppBar(title: const Text('Add Address',style: TextStyle(fontFamily: 'heading',
+          color: Colors.white,
+          fontSize: 20,
+          fontWeight: FontWeight.bold),),centerTitle: true,backgroundColor: Colors.blue,foregroundColor:Colors.white,shape: const Border(bottom: BorderSide(width: 3,color: Colors.grey)),),
       body: SafeArea(
         child: Expanded(child: Padding(
           padding: const EdgeInsets.all(8.0),
@@ -366,7 +369,7 @@ class _addAddressState extends State<addAddress> {
                 ),
               )),
               const Gap(10),
-              Expanded(flex: 5,child: Container(
+              Flexible(flex: 5,child: Container(
                 margin: const EdgeInsets.symmetric(vertical: 30),
                 child: TextButton(onPressed: () {
                   // setState(() {
@@ -378,8 +381,8 @@ class _addAddressState extends State<addAddress> {
                   //OrderHistoryList.add(order);},
                 },style: ButtonStyle(
 
-                    backgroundColor: MaterialStateProperty.all(Colors.blue)),child: const Text('Proceed for Payment',style: TextStyle(color: Colors.black87,
-                    fontWeight: FontWeight.bold,fontSize: 15),),),
+                    backgroundColor: MaterialStateProperty.all(Colors.blue)),child: const Text('Proceed for Payment',style: TextStyle(color: Colors.white,
+                    fontWeight: FontWeight.bold,fontSize: 20,fontFamily: 'heading'),),),
               ))
             ],
           ),

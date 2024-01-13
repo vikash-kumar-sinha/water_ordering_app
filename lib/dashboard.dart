@@ -279,15 +279,16 @@ class RoundedIconButton extends StatelessWidget {
   final IconData icon;
    final VoidCallback onPressed;
 
+
   @override
   Widget build(BuildContext context) {
     return RawMaterialButton(
       onPressed: onPressed,
     elevation: 6.0,
-    constraints: const BoxConstraints.tightFor(width: 40.0,height: 40.0),
+    constraints:  BoxConstraints.tightFor(width: 40.0,height: 40.0),
     shape: const CircleBorder(),
     fillColor: Colors.lightBlue,
-      child: Icon(icon),);
+      child: Icon(icon,color: Colors.white,size: 35,),);
   }
 }
 
@@ -336,7 +337,7 @@ class _NewOrderState extends State<NewOrder> {
                         }),
                         const SizedBox(width: 5,),
                         Text(smallBottleNumber.toString(),style: const TextStyle(
-                            fontSize: 15,fontWeight: FontWeight.bold
+                            fontSize: 15,fontWeight: FontWeight.bold,fontFamily: 'salsa'
                         ),),
                         const SizedBox(width: 5,),
                         RoundedIconButton(icon: Icons.add, onPressed: (){
@@ -357,7 +358,7 @@ class _NewOrderState extends State<NewOrder> {
                         }),
                         const SizedBox(width: 5,),
                         Text(largeBottleNumber.toString(),style: const TextStyle(
-                            fontSize: 15,fontWeight: FontWeight.bold
+                            fontSize: 15,fontWeight: FontWeight.bold,fontFamily: 'salsa'
                         ),),
                         const SizedBox(width: 5,),
                         RoundedIconButton(icon: Icons.add, onPressed: (){
@@ -370,11 +371,11 @@ class _NewOrderState extends State<NewOrder> {
                   Expanded(flex: 2,child: Row(
                     children: [
                       const Expanded(child: Center(child: Text('Total',style: TextStyle(
-                          fontSize: 15,fontWeight: FontWeight.bold
+                          fontSize: 15,fontWeight: FontWeight.bold,fontFamily: 'salsa'
                       ),))),
                       const SizedBox(child: VerticalDivider(width:3,thickness: 3.0,color: Colors.blue,),),
                       Expanded(child: Center(child: Text('\u{20B9}${smallBottleNumber*20+largeBottleNumber*30}',style: const TextStyle(
-                          fontSize: 15,fontWeight: FontWeight.bold
+                          fontSize: 15,fontWeight: FontWeight.bold,fontFamily: 'salsa'
                       ),))),
 
                     ],
@@ -387,15 +388,15 @@ class _NewOrderState extends State<NewOrder> {
 
             ),
             //Expanded(flex: 1,child: SizedBox(height: 10,)),
-            Expanded(flex: 2,child: Container(
+            Flexible(flex: 2,child: Container(
               margin: const EdgeInsets.symmetric(vertical: 30),
               child: TextButton(onPressed: (){
                 Navigator.push(context, MaterialPageRoute(builder: (context)=>addAddress(
                     smallBottleNumber: smallBottleNumber, largeBottleNumber: largeBottleNumber,currentUserEmail: widget.currentUserEmail,)));
                 },style: ButtonStyle(
 
-                  backgroundColor: MaterialStateProperty.all(Colors.blue)), child: const Text('Proceed for address',style: TextStyle(color: Colors.black87,
-                  fontWeight: FontWeight.bold,fontSize: 15),),),
+                  backgroundColor: MaterialStateProperty.all(Colors.blue)), child: const Text('Proceed for address',style: TextStyle(color: Colors.white,
+                  fontWeight: FontWeight.bold,fontSize: 15,fontFamily: 'salsa',),),),
             ))
 
           ],
@@ -433,15 +434,18 @@ class _NewState extends State<New> {
   }
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: _isLoading?Scaffold(
-        body: Center(
-          child: SpinKitWaveSpinner(color: Colors.blue,size: 150,waveColor: Colors.blue,),
-        ),
-      ):Scaffold(
-        appBar: AppBar(title: Text('New Order'),centerTitle: true,backgroundColor: Colors.blue,),
-        body: NewOrder(currentUserEmail: widget.currentUserEmail,smallImage: widget.smallImage,largeImage: widget.largeImage,),
+    return _isLoading?Scaffold(
+      body: Center(
+        child: SpinKitWaveSpinner(color: Colors.blue,size: 150,waveColor: Colors.blue,),
       ),
+    ):Scaffold(
+      appBar: AppBar(title: Text('New Order',style: TextStyle(
+          fontFamily: 'heading',
+          color: Colors.white,
+          fontSize: 18,
+          fontWeight: FontWeight.bold
+      ),),centerTitle: true,backgroundColor: Colors.blue,foregroundColor: Colors.white,),
+      body: NewOrder(currentUserEmail: widget.currentUserEmail,smallImage: widget.smallImage,largeImage: widget.largeImage,),
     );
   }
 }
