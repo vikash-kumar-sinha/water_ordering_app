@@ -40,6 +40,7 @@ const TextStyle orderTextstyle=TextStyle(
  TextStyle aboutTextStyle=TextStyle(
   fontSize: 15,
   fontWeight: FontWeight.bold,
+    color: Colors.black87,
 
     shadows: [
       Shadow(

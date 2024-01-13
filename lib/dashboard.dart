@@ -8,13 +8,14 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:water_ordering_app/history.dart';
 import 'package:water_ordering_app/login.dart';
-
+import 'package:visibility_detector/visibility_detector.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:water_ordering_app/orderList.dart';
 import 'address.dart';
 import 'package:gap/gap.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'imageCarsoul.dart';
+import 'package:animated_text_kit/animated_text_kit.dart';
 const story="""It all started with a simple observation: access to clean, refreshing water shouldn't be a luxury. We saw the struggle of lugging heavy bottles and the frustration of unreliable delivery services. Inspired by a vision of making sustainable hydration accessible to everyone, [App Name] was born.
 """;
 const additional="""Add a personal touch by mentioning the founders' story or what sparked their passion for water delivery.
@@ -90,6 +91,7 @@ logOut()async{
     Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const login_page()));
   });
 }
+   late Map<String?, bool> _visibleCards ;
 @override
   void initState() {
     // TODO: implement initState
@@ -99,6 +101,13 @@ logOut()async{
     //     _isLoading=false;
     //   });
     // });
+    _visibleCards = {
+      'About the Company': false,
+      'Our Story': false,
+      'Our Mission': false,
+      'Additional points to consider': false,
+      'Founder Card': false,
+    };
     getUser();
 
 
@@ -141,35 +150,95 @@ logOut()async{
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text('About the Company',style: aboutTextStyle,),
+                  DefaultTextStyle(style: aboutTextStyle,child: AnimatedTextKit(
+                    animatedTexts: [
+                      WavyAnimatedText('About the Company')
+                    ],
+                  ),),
                   SizedBox(child: Divider(thickness: 3,color: Colors.black87,),width: 150,),
-                  Card(color: Colors.blue[300],elevation:5,child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text(about,softWrap: true,textAlign: TextAlign.justify,style: cardtextStyle),
-                  )),
+                  VisibilityDetector(
+                    key: Key('About the Company'),
+                    onVisibilityChanged: (visibilityinfo)=>setState(() {
+                      _visibleCards['About the Company']=visibilityinfo.visibleFraction>0.2;
+                    }),
+                    child: AnimatedOpacity(
+                      opacity: _visibleCards['About the Company']??false?1.0:0.0,
+                      duration: Duration(milliseconds: 1000),
+                      child: Card(color: Colors.blue[300],elevation:5,child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text(about,softWrap: true,textAlign: TextAlign.justify,style: cardtextStyle),
+                      )),
+                    ),
+                  ),
                   Gap(20),
-                  Text('Our Story',style: aboutTextStyle,),
+                  DefaultTextStyle(style: aboutTextStyle,child: AnimatedTextKit(
+                    animatedTexts: [
+                      WavyAnimatedText('Our Story')
+                    ],
+                  ),),
                   SizedBox(child: Divider(thickness: 3,color: Colors.black87,),width: 70,),
-                  Card(color: Colors.blue[300],elevation:5,child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text(story,softWrap: true,textAlign: TextAlign.justify,style: cardtextStyle),
-                  )),
+                  VisibilityDetector(
+                    key: Key('Our Story'),
+                    onVisibilityChanged: (visibilityinfo)=>setState(() {
+                      _visibleCards['Our Story']=visibilityinfo.visibleFraction>0.2;
+                    }),
+                    child: AnimatedOpacity(
+                      opacity: _visibleCards['Our Story']??false?1.0:0.0,
+                      duration: Duration(milliseconds: 1000),
+                      child: Card(color: Colors.blue[300],elevation:5,child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text(story,softWrap: true,textAlign: TextAlign.justify,style: cardtextStyle),
+                      )),
+                    ),
+                  ),
                   Gap(20),
-                  Text('Our Mission',style: aboutTextStyle,),
+                  DefaultTextStyle(style: aboutTextStyle,child: AnimatedTextKit(
+                    animatedTexts: [
+                      WavyAnimatedText('Our Mission')
+                    ],
+                  ),),
                   SizedBox(child: Divider(thickness: 3,color: Colors.black87,),width: 90,),
-                  Card(color: Colors.blue[300],elevation:5,child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text(mission,softWrap: true,textAlign: TextAlign.justify,style: cardtextStyle),
-                  )),
+                  VisibilityDetector(
+                    key: Key('Our Mission'),
+                    onVisibilityChanged: (visibilityinfo)=>setState(() {
+                      _visibleCards['Our Mission']=visibilityinfo.visibleFraction>0.2;
+                    }),
+                    child: AnimatedOpacity(
+                      opacity: _visibleCards['Our Mission']??false?1.0:0.0,
+                      duration: Duration(milliseconds: 1000),
+                      child: Card(color: Colors.blue[300],elevation:5,child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text(mission,softWrap: true,textAlign: TextAlign.justify,style: cardtextStyle),
+                      )),
+                    ),
+                  ),
                   Gap(20),
-                  Text(' Additional points to consider',style: aboutTextStyle,),
+                  DefaultTextStyle(style: aboutTextStyle,child: AnimatedTextKit(
+                    animatedTexts: [
+                      WavyAnimatedText('Additional Points to consider')
+                    ],
+                  ),),
                   SizedBox(child: Divider(thickness: 3,color: Colors.black87,),width: 220,),
-                  Card(color: Colors.blue[300],elevation:5,child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text(additional,softWrap: true,textAlign: TextAlign.justify,style: cardtextStyle),
-                  )),
+                  VisibilityDetector(
+                    key: Key('Additional Points to consider'),
+                    onVisibilityChanged: (visibilityinfo)=>setState(() {
+                      _visibleCards['Additional Points to consider']=visibilityinfo.visibleFraction>0.2;
+                    }),
+                    child: AnimatedOpacity(
+                      opacity: _visibleCards['Additional Points to consider']??false?1.0:0.0,
+                      duration: Duration(milliseconds: 1000),
+                      child: Card(color: Colors.blue[300],elevation:5,child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text(additional,softWrap: true,textAlign: TextAlign.justify,style: cardtextStyle),
+                      )),
+                    ),
+                  ),
                   Gap(20),
-                  Text('Founder',style: aboutTextStyle,),
+                  DefaultTextStyle(style: aboutTextStyle,child: AnimatedTextKit(
+                    animatedTexts: [
+                      WavyAnimatedText('Founder')
+                    ],
+                  ),),
                   SizedBox(child: Divider(thickness: 3,color: Colors.black87,),width: 65,),
                   Column(
                     children: [
@@ -191,11 +260,13 @@ logOut()async{
       floatingActionButton: FloatingActionButton.extended(
         onPressed: ()=>Navigator.push(context, MaterialPageRoute(builder: (context)=>New(currentUserEmail: widget.currentUserEmail,smallImage: smallImage,largeImage: largeImage,),)),
         backgroundColor: Colors.blue,
-        icon: Icon(Icons.add),
+        icon: Icon(Icons.add,color: Colors.white,size: 35,),
         label: Text('New Order',style: const TextStyle(
-            color: Colors.black87,
-            fontSize: 13,
+            fontFamily: 'heading',
+            color: Colors.white,
+            fontSize: 18,
             fontWeight: FontWeight.bold
+
         ),),
       ),
     );
