@@ -95,6 +95,16 @@ class _registration_pageState extends State<registration_page> {
         child: SpinKitWaveSpinner(color: Colors.blue,size: 150,waveColor: Colors.blue,),
       ),
     ):Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.blue,
+        foregroundColor: Colors.white,
+        title: Text('Create a new account',style: TextStyle(
+            fontFamily: 'heading',
+            color: Colors.white,
+            fontSize: 20,
+            fontWeight: FontWeight.bold
+        ),),
+      ),
       body: SafeArea(
         child: Expanded(
           child: Padding(
@@ -105,13 +115,7 @@ class _registration_pageState extends State<registration_page> {
               // crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 const Expanded(flex:3,child: SizedBox()),
-                const Expanded(flex: 4,
-                  child: Text('Create a new account',textAlign: TextAlign.center,style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 22,
 
-                  ),),
-                ),
                 const Gap(10),
                 //SizedBox(height: 10,),
                 Expanded(flex: 4,
@@ -121,7 +125,8 @@ class _registration_pageState extends State<registration_page> {
                       controller: nameController,
                       style: const TextStyle(
                           color: Colors.black87,
-                          fontWeight: FontWeight.bold
+                          fontWeight: FontWeight.bold,
+                        fontFamily: 'salsa'
                       ),
 
                       decoration: InputDecoration(
@@ -129,7 +134,8 @@ class _registration_pageState extends State<registration_page> {
                           hintStyle: const TextStyle(
                               color: Colors.grey,
                               fontWeight: FontWeight.bold,
-                              fontSize: 15
+                              fontSize: 15,
+                              fontFamily: 'salsa'
                           ),
                           prefixIcon: const Icon(Icons.person,color: Colors.blue,),
                           focusedBorder: OutlineInputBorder(
@@ -160,6 +166,7 @@ class _registration_pageState extends State<registration_page> {
                       controller: emailController,
                       style: const TextStyle(
                           color: Colors.black87,
+                          fontFamily: 'salsa',
                           fontWeight: FontWeight.bold
                       ),
                       keyboardType: TextInputType.emailAddress,
@@ -167,6 +174,7 @@ class _registration_pageState extends State<registration_page> {
                           hintText: 'E-mail',
                           hintStyle: const TextStyle(
                               color: Colors.grey,
+                              fontFamily: 'salsa',
                               fontWeight: FontWeight.bold,
                               fontSize: 15
                           ),
@@ -199,6 +207,7 @@ class _registration_pageState extends State<registration_page> {
                       controller: phoneController,
                       style: const TextStyle(
                           color: Colors.black87,
+                          fontFamily: 'salsa',
                           fontWeight: FontWeight.bold
                       ),
                       keyboardType: TextInputType.emailAddress,
@@ -206,6 +215,7 @@ class _registration_pageState extends State<registration_page> {
                           hintText: 'Phone',
                           hintStyle: const TextStyle(
                               color: Colors.grey,
+                              fontFamily: 'salsa',
                               fontWeight: FontWeight.bold,
                               fontSize: 15
                           ),
@@ -239,6 +249,7 @@ class _registration_pageState extends State<registration_page> {
                       obscureText: true,
                       style: const TextStyle(
                           color: Colors.black87,
+                          fontFamily: 'salsa',
                           fontWeight: FontWeight.bold
                       ),
 
@@ -246,6 +257,7 @@ class _registration_pageState extends State<registration_page> {
                           hintText: 'Password',
                           hintStyle: const TextStyle(
                               color: Colors.grey,
+                              fontFamily: 'salsa',
                               fontWeight: FontWeight.bold,
                               fontSize: 15
                           ),
@@ -279,7 +291,8 @@ class _registration_pageState extends State<registration_page> {
                       obscureText: _confirmPassObcure,
                       style: const TextStyle(
                           color: Colors.black87,
-                          fontWeight: FontWeight.bold
+                          fontWeight: FontWeight.bold,
+                          fontFamily: 'salsa'
                       ),
 
                       decoration: InputDecoration(
@@ -292,6 +305,7 @@ class _registration_pageState extends State<registration_page> {
                           hintText: 'Confirm Password',
                           hintStyle: const TextStyle(
                               color: Colors.grey,
+                              fontFamily: 'salsa',
                               fontWeight: FontWeight.bold,
                               fontSize: 15
                           ),
@@ -329,9 +343,10 @@ class _registration_pageState extends State<registration_page> {
 
                         ), child: const Text('Create account',
                       style: TextStyle(
-                          color: Colors.black87,
-                          fontSize: 15,
-                          fontWeight: FontWeight.bold
+                          color: Colors.white,
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                        fontFamily: 'heading'
                       ),),),
                   ),
                 ),
@@ -342,13 +357,14 @@ class _registration_pageState extends State<registration_page> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       const Text('Already have a account?',style: TextStyle(
-                          fontSize: 15
+                          fontSize: 14,
+                        fontFamily: 'solway'
                       ),),
                       TextButton(onPressed: (){
                        // Navigator.push(context, MaterialPageRoute(builder: (context)=>login_page()));
                         Navigator.pop(context);
                       }, child: const Text('Login',style: TextStyle(
-                          fontSize: 15
+                          fontSize: 15, fontFamily: 'salsa'
                       ),))
                     ],),
                 ),

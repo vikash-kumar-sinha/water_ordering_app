@@ -72,73 +72,72 @@ class _OrderHistoryState extends State<OrderHistory> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: _isLoading?const Scaffold(
-        body: Center(
-          child: SpinKitWaveSpinner(color: Colors.blue,size: 150,waveColor: Colors.blue,),
-        ),
-      ):Scaffold(
-        appBar: AppBar(foregroundColor: Colors.black87,
-          title: const Text('Your Orders',style: TextStyle(
-              color: Colors.black87,
-              fontSize: 16,
-              fontWeight: FontWeight.bold
-          ),),
-          centerTitle: true,
-          backgroundColor: Colors.blue,
-        ),
-        body: Column(
-          children: [
-            const Flexible(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
+    return _isLoading?const Scaffold(
+      body: Center(
+        child: SpinKitWaveSpinner(color: Colors.blue,size: 150,waveColor: Colors.blue,),
+      ),
+    ):Scaffold(
+      appBar: AppBar(foregroundColor: Colors.white,
+        title: const Text('Your Orders',style: TextStyle(
+            fontFamily: 'heading',
+            fontSize: 20,
+            fontWeight: FontWeight.bold
+        ),),
+        centerTitle: true,
+        backgroundColor: Colors.blue,
+
+      ),
+      body: Column(
+        children: [
+          const Flexible(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+               Gap(10),
+              Text('Orders',style: TextStyle(color: Colors.black87,fontWeight: FontWeight.bold,fontSize: 15,fontFamily: 'salsa'),),
+              Gap(40),
+              Text('Date & Time',style: TextStyle(color: Colors.black87,fontWeight: FontWeight.bold,fontSize: 13,fontFamily: 'salsa'),),
+              Gap(20),
+              Text('Price',style: TextStyle(color: Colors.black87,fontWeight: FontWeight.bold,fontSize: 13,fontFamily: 'salsa'),),
+            ],),
+          ),
+    Expanded(
+      child: ListView.builder(
+          shrinkWrap: true,
+          itemCount: ordersList.length,
+          itemBuilder: (context, index){
+            final order=ordersList[index];
+            return Card(
+              child: Column(
                 children: [
-                 Gap(10),
-                Text('Orders',style: TextStyle(color: Colors.black87,fontWeight: FontWeight.bold,fontSize: 15),),
-                Gap(40),
-                Text('Date & Time',style: TextStyle(color: Colors.black87,fontWeight: FontWeight.bold,fontSize: 13),),
-                Gap(20),
-                Text('Price',style: TextStyle(color: Colors.black87,fontWeight: FontWeight.bold,fontSize: 13),),
-              ],),
-            ),
-      Expanded(
-        child: ListView.builder(
-            shrinkWrap: true,
-            itemCount: ordersList.length,
-            itemBuilder: (context, index){
-              final order=ordersList[index];
-              return Card(
-                child: Column(
-                  children: [
-                    const SizedBox(height: 5,),
-                    Row(
-                           mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: [
+                  const SizedBox(height: 5,),
+                  Row(
+                         mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
 
-                        Column(
-                          children: [
-                            Text('Small bottles : ${order["small bottle"]}',style: orderTextstyle,),
-                            Text('large bottles  : ${order["Large bottle"]}',style: orderTextstyle,)
-                          ],
-                        ),
+                      Column(
+                        children: [
+                          Text('Small bottles : ${order["small bottle"]}',style: orderTextstyle,),
+                          Text('large bottles  : ${order["Large bottle"]}',style: orderTextstyle,)
+                        ],
+                      ),
+                      const SizedBox(width: 5,),
+                      Row(children: [
+                        Text('${order["Date"]}',style: orderTextstyle,),
                         const SizedBox(width: 5,),
-                        Row(children: [
-                          Text('${order["Date"]}',style: orderTextstyle,),
-                          const SizedBox(width: 5,),
-                          Text('${order["Time"]}',style: orderTextstyle,)
-                        ],),
-                        const SizedBox(width: 5,),
-                        Text('\u{20B9} ${order["Price"]}',style: orderTextstyle,)
-                      ],)
-                  ],
-                ),
-              );
-            }),
-      ),
-          ],
-        )
+                        Text('${order["Time"]}',style: orderTextstyle,)
+                      ],),
+                      const SizedBox(width: 5,),
+                      Text('\u{20B9} ${order["Price"]}',style: orderTextstyle,)
+                    ],)
+                ],
+              ),
+            );
+          }),
+    ),
+        ],
+      )
 
-      ),
     );
   }
 }

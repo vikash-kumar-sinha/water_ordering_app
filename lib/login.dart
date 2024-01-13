@@ -70,7 +70,8 @@ class _login_pageState extends State<login_page> {
               const Expanded(flex: 3,
                 child: Text('Welcome back',textAlign: TextAlign.center,style: TextStyle(
                   fontWeight: FontWeight.bold,
-                  fontSize: 22,
+                  fontSize: 25,
+                  fontFamily: 'heading'
                 ),),
               ),
               Gap(20),
@@ -81,7 +82,7 @@ class _login_pageState extends State<login_page> {
                     controller: emailController,
                     style: const TextStyle(
                         color: Colors.black87,
-                        fontWeight: FontWeight.bold
+                        fontWeight: FontWeight.w500,fontFamily: 'salsa'
                     ),
                     keyboardType: TextInputType.emailAddress,
                     decoration: InputDecoration(
@@ -89,7 +90,7 @@ class _login_pageState extends State<login_page> {
                         hintStyle: const TextStyle(
                             color: Colors.grey,
                             fontWeight: FontWeight.bold,
-                            fontSize: 15
+                            fontSize: 15,fontFamily: 'salsa'
                         ),
                         prefixIcon: const Icon(Icons.email,color: Colors.blue,),
                         focusedBorder: OutlineInputBorder(
@@ -122,7 +123,7 @@ class _login_pageState extends State<login_page> {
                     obscureText: _passObcure,
                     style: const TextStyle(
                         color: Colors.black87,
-                        fontWeight: FontWeight.bold
+                        fontWeight: FontWeight.bold,fontFamily: 'salsa'
                     ),
 
                     decoration: InputDecoration(
@@ -137,7 +138,8 @@ class _login_pageState extends State<login_page> {
                         hintStyle: const TextStyle(
                             color: Colors.grey,
                             fontWeight: FontWeight.bold,
-                            fontSize: 15
+                            fontSize: 15,
+                          fontFamily: 'salsa'
                         ),
                         prefixIcon: const Icon(Icons.lock,color: Colors.blue,),
                         focusedBorder: OutlineInputBorder(
@@ -162,7 +164,7 @@ class _login_pageState extends State<login_page> {
               Expanded(flex:2,child: Row(mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   const SizedBox(width: 10,),
-                TextButton(onPressed: (){Navigator.push(context,MaterialPageRoute(builder: (context)=>const ForgotPassword()));}, child: const Text('Forgot Password?',style: TextStyle(fontSize: 12,color: Colors.red),))
+                TextButton(onPressed: (){Navigator.push(context,MaterialPageRoute(builder: (context)=>const ForgotPassword()));}, child: const Text('Forgot Password?',style: TextStyle(fontSize: 13,color: Colors.red,fontFamily: 'solway'),))
 
               ],)),
               //SizedBox(height: 20,),
@@ -176,9 +178,9 @@ class _login_pageState extends State<login_page> {
 
                   ), child: const Text('Login',
                   style: TextStyle(
-                    color: Colors.black87,
-                    fontSize: 12,
-                    fontWeight: FontWeight.bold
+                    color: Colors.white,
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,fontFamily: 'heading'
                   ),)),
                 ),
               ),
@@ -189,11 +191,11 @@ class _login_pageState extends State<login_page> {
                     children: [
                       const SizedBox(),
                       const Text('Don\'t have account?',style: TextStyle(
-                    fontSize: 12
+                    fontSize: 12,fontFamily: 'solway'
                   ),),
                  
                   TextButton(onPressed: (){Navigator.push(context, MaterialPageRoute(builder: (context)=>const registration_page()));}, child: const Text('Create a new account',style: TextStyle(
-                    fontSize: 12
+                    fontSize: 12,fontFamily: 'solway'
                   ),))
                 ],),
               ),

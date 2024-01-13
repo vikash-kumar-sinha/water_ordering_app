@@ -208,7 +208,7 @@ class _addAddressState extends State<addAddress> {
                 controller: roomNoController,
                 style: const TextStyle(
                     color: Colors.black87,
-                    fontWeight: FontWeight.bold
+                    fontWeight: FontWeight.bold, fontFamily: 'salsa'
                 ),
 
                 decoration: InputDecoration(
@@ -216,6 +216,7 @@ class _addAddressState extends State<addAddress> {
                     hintStyle: const TextStyle(
                         color: Colors.grey,
                         fontWeight: FontWeight.bold,
+                        fontFamily: 'salsa',
                         fontSize: 14
                     ),
                     prefixIcon: const Icon(Icons.room,color: Colors.blue,),
@@ -241,7 +242,7 @@ class _addAddressState extends State<addAddress> {
                 controller: streetnameController,
                 style: const TextStyle(
                     color: Colors.black87,
-                    fontWeight: FontWeight.bold
+                    fontWeight: FontWeight.bold, fontFamily: 'salsa'
                 ),
 
                 decoration: InputDecoration(
@@ -249,7 +250,7 @@ class _addAddressState extends State<addAddress> {
                     hintStyle: const TextStyle(
                         color: Colors.grey,
                         fontWeight: FontWeight.bold,
-                        fontSize: 14
+                        fontSize: 14, fontFamily: 'salsa'
                     ),
                     prefixIcon: const Icon(Icons.map,color: Colors.blue,),
                     focusedBorder: OutlineInputBorder(
@@ -274,7 +275,7 @@ class _addAddressState extends State<addAddress> {
                 controller: areaController,
                 style: const TextStyle(
                     color: Colors.black87,
-                    fontWeight: FontWeight.bold
+                    fontWeight: FontWeight.bold, fontFamily: 'salsa'
                 ),
 
                 decoration: InputDecoration(
@@ -282,7 +283,7 @@ class _addAddressState extends State<addAddress> {
                     hintStyle: const TextStyle(
                         color: Colors.grey,
                         fontWeight: FontWeight.bold,
-                        fontSize: 14
+                        fontSize: 14, fontFamily: 'salsa'
                     ),
                     prefixIcon: const Icon(Icons.near_me,color: Colors.blue,),
                     focusedBorder: OutlineInputBorder(
@@ -307,7 +308,7 @@ class _addAddressState extends State<addAddress> {
                 controller: cityController,
                 style: const TextStyle(
                     color: Colors.black87,
-                    fontWeight: FontWeight.bold
+                    fontWeight: FontWeight.bold, fontFamily: 'salsa'
                 ),
 
                 decoration: InputDecoration(
@@ -315,7 +316,7 @@ class _addAddressState extends State<addAddress> {
                     hintStyle: const TextStyle(
                         color: Colors.grey,
                         fontWeight: FontWeight.bold,
-                        fontSize: 14
+                        fontSize: 14, fontFamily: 'salsa'
                     ),
                     prefixIcon: const Icon(Icons.location_city,color: Colors.blue,),
                     focusedBorder: OutlineInputBorder(
@@ -340,7 +341,7 @@ class _addAddressState extends State<addAddress> {
                 controller: pincodeController,
                 style: const TextStyle(
                     color: Colors.black87,
-                    fontWeight: FontWeight.bold
+                    fontWeight: FontWeight.bold, fontFamily: 'salsa'
                 ),
 
                 decoration: InputDecoration(
@@ -348,7 +349,7 @@ class _addAddressState extends State<addAddress> {
                     hintStyle: const TextStyle(
                         color: Colors.grey,
                         fontWeight: FontWeight.bold,
-                        fontSize: 14
+                        fontSize: 14, fontFamily: 'salsa'
                     ),
                     prefixIcon: const Icon(Icons.pin_drop_outlined,color: Colors.blue,),
                     focusedBorder: OutlineInputBorder(

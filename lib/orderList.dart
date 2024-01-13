@@ -35,7 +35,9 @@ class UiHelper{
 
 const TextStyle orderTextstyle=TextStyle(
   fontSize: 10,
-  fontWeight: FontWeight.bold
+  fontWeight: FontWeight.bold,
+  fontFamily: 'solway',
+  color: Colors.blue
 );
  TextStyle aboutTextStyle=TextStyle(
    fontFamily: 'salsa',
