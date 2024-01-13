@@ -24,20 +24,26 @@ class OrderHistoryDataType {
 class UiHelper{
   static customAlertBox(BuildContext context,String text){
     return showDialog(context: context, builder: (BuildContext context){
-      return AlertDialog(title:Text(text,textScaleFactor: 1,),actions: [
+      return AlertDialog(title:Text(text,style: TextStyle(
+          fontSize: 15,
+          fontWeight: FontWeight.bold,
+          fontFamily: 'solway',
+          color: Colors.blue
+      ),),actions: [
         TextButton(onPressed: (){
           Navigator.pop(context);
-        }, child: const Text('Ok'))
+        }, child:  Text('Ok',style: aboutTextStyle,))
       ],);
     });
   }
 }
 
-const TextStyle orderTextstyle=TextStyle(
+ const TextStyle orderTextstyle=TextStyle(
   fontSize: 10,
   fontWeight: FontWeight.bold,
   fontFamily: 'solway',
-  color: Colors.blue
+  color: Color(0xff190482)
+
 );
  TextStyle aboutTextStyle=TextStyle(
    fontFamily: 'salsa',

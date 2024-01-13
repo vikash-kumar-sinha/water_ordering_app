@@ -14,9 +14,11 @@ class OrderHistory extends StatefulWidget {
   State<OrderHistory> createState() => _OrderHistoryState();
 }
 
-class _OrderHistoryState extends State<OrderHistory> {
+class _OrderHistoryState extends State<OrderHistory> with SingleTickerProviderStateMixin{
   final user=FirebaseFirestore.instance;
   bool _isLoading=true;
+  // late AnimationController _controller;
+  // late Animation<double> _animation;
 
   //List<OrderHistoryDataType> ordersList=[];
   List<dynamic> ordersList=[];
@@ -62,6 +64,8 @@ class _OrderHistoryState extends State<OrderHistory> {
   void initState() {
     // TODO: implement initState
     super.initState();
+    // _controller=AnimationController(vsync: this,duration: Duration(milliseconds: 500));
+    // _animation=Tween<double>(begin: 0.0,end: 1.0).animate(_controller);
     Future.delayed(const Duration(seconds: 2),(){
       setState(() {
         _isLoading=false;
@@ -69,7 +73,12 @@ class _OrderHistoryState extends State<OrderHistory> {
     });
     getDocuments();
   }
-
+@override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    //_controller.dispose();
+  }
   @override
   Widget build(BuildContext context) {
     return _isLoading?const Scaffold(
@@ -108,29 +117,40 @@ class _OrderHistoryState extends State<OrderHistory> {
           itemBuilder: (context, index){
             final order=ordersList[index];
             return Card(
-              child: Column(
-                children: [
-                  const SizedBox(height: 5,),
-                  Row(
-                         mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
+              child: Container(
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(12),
+                    gradient: LinearGradient(
+                        colors: [
+                          Color(0xffaccbee),
+                          Color(0xffe7f0fd)
+                        ]
+                    )
+                ),
+                child: Column(
+                  children: [
+                    const SizedBox(height: 5,),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
 
-                      Column(
-                        children: [
-                          Text('Small bottles : ${order["small bottle"]}',style: orderTextstyle,),
-                          Text('large bottles  : ${order["Large bottle"]}',style: orderTextstyle,)
-                        ],
-                      ),
-                      const SizedBox(width: 5,),
-                      Row(children: [
-                        Text('${order["Date"]}',style: orderTextstyle,),
+                        Column(
+                          children: [
+                            Text('Small bottles : ${order["small bottle"]}',style: orderTextstyle,),
+                            Text('large bottles  : ${order["Large bottle"]}',style: orderTextstyle,)
+                          ],
+                        ),
                         const SizedBox(width: 5,),
-                        Text('${order["Time"]}',style: orderTextstyle,)
-                      ],),
-                      const SizedBox(width: 5,),
-                      Text('\u{20B9} ${order["Price"]}',style: orderTextstyle,)
-                    ],)
-                ],
+                        Row(children: [
+                          Text('${order["Date"]}',style: orderTextstyle,),
+                          const SizedBox(width: 5,),
+                          Text('${order["Time"]}',style: orderTextstyle,)
+                        ],),
+                        const SizedBox(width: 5,),
+                        Text('\u{20B9} ${order["Price"]}',style: orderTextstyle,)
+                      ],)
+                  ],
+                ),
               ),
             );
           }),
